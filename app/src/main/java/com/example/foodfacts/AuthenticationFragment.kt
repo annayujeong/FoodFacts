@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
+import androidx.fragment.app.activityViewModels
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -51,6 +52,9 @@ class AuthenticationFragment : Fragment() {
             val email = view.findViewById<EditText>(R.id.editTextTextEmailAddress)
             val password = view.findViewById<EditText>(R.id.editTextTextPassword)
 
+            val foodviewmodel : FoodViewModel by activityViewModels()
+
+            foodviewmodel.
 
         }
 
