@@ -51,11 +51,7 @@ class AuthenticationFragment : Fragment() {
             // TODO: call method to sign in
             val email = view.findViewById<EditText>(R.id.editTextTextEmailAddress)
             val password = view.findViewById<EditText>(R.id.editTextTextPassword)
-
             val foodviewmodel : FoodViewModel by activityViewModels()
-
-            foodviewmodel.
-
         }
 
         createAccountButton.setOnClickListener(){
