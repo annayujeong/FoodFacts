@@ -1,6 +1,7 @@
 package com.example.foodfacts
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -8,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.fragment.findNavController
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -19,7 +21,7 @@ private const val ARG_PARAM2 = "param2"
  * Use the [AuthenticationFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class AuthenticationFragment : Fragment() {
+class AuthenticationFragment : Fragment(), AuthenticationInterface {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
@@ -47,15 +49,29 @@ class AuthenticationFragment : Fragment() {
 
         val createAccountButton = view.findViewById<Button>(R.id.createAccountButton)
 
+        val email = view.findViewById<EditText>(R.id.editTextTextEmailAddress)
+        val authViewModel: AuthViewModel by activityViewModels()
+        val password = view.findViewById<EditText>(R.id.editTextTextPassword)
+
         loginButton.setOnClickListener(){
-            // TODO: call method to sign in
-            val email = view.findViewById<EditText>(R.id.editTextTextEmailAddress)
-            val password = view.findViewById<EditText>(R.id.editTextTextPassword)
-            val foodviewmodel : FoodViewModel by activityViewModels()
+
+            authViewModel.signIn(email.text.toString(), password.text.toString(), this)
+
+//            if(authViewModel.currentUser() != null){
+//                findNavController().navigate(R.id.action_splashScreenFragment_to_homeFragment)
+//            }
         }
 
         createAccountButton.setOnClickListener(){
-            // TODO: call method to create account
+
+            authViewModel.createAccount(email.text.toString(), password.text.toString(), this)
+            Log.d("bruh", email.toString())
+            Log.d("bruh", password.toString())
+            Log.d("bruh", "create account button was clicked")
+
+//            if(authViewModel.currentUser() != null){
+//                findNavController().navigate(R.id.action_splashScreenFragment_to_homeFragment)
+//            }
         }
     }
 
@@ -77,5 +93,13 @@ class AuthenticationFragment : Fragment() {
                     putString(ARG_PARAM2, param2)
                 }
             }
+    }
+
+    override fun goToHomeScreen(){
+        findNavController().navigate(R.id.action_splashScreenFragment_to_homeFragment)
+    }
+
+    override fun goToCreateAccount(){
+        findNavController().navigate(R.id.action_splashScreenFragment_to_createAccountFragment)
     }
 }

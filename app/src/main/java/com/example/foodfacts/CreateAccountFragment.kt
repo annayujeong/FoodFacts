@@ -5,6 +5,11 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import android.widget.EditText
+import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.Observer
+import com.google.firebase.auth.FirebaseUser
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -26,6 +31,21 @@ class CreateAccountFragment : Fragment() {
         arguments?.let {
             param1 = it.getString(ARG_PARAM1)
             param2 = it.getString(ARG_PARAM2)
+        }
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        val authViewModel: AuthViewModel by activityViewModels()
+
+        val dataObserver = Observer<FirebaseUser>{}
+
+        val button = view.findViewById<Button>(R.id.createAccountButton)
+
+        button.setOnClickListener{
+            val email = view.findViewById<EditText>(R.id.editTextTextEmailAddress)
+            val password = view.findViewById<EditText>(R.id.editTextTextPassword)
         }
     }
 

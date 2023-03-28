@@ -2,7 +2,11 @@ package com.example.foodfacts
 
 interface AuthenticationInterface {
 
-    fun signIn()
+    fun goToHomeScreen(){
 
-    fun createAccount()
+    }
+
+    fun goToCreateAccount(){
+
+    }
 }

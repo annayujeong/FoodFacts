@@ -26,12 +26,8 @@ class FoodViewModel: ViewModel() {
         auth = Firebase.auth
     }
 
-    fun initializeFirebase(){
-        db = Firebase.firestore
-    }
-
     fun createAccount(){
-        // TODO:
+
     }
 
     fun signIn(){
