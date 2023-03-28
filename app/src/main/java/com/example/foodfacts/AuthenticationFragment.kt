@@ -63,11 +63,11 @@ class AuthenticationFragment : Fragment(), AuthenticationInterface {
         }
 
         createAccountButton.setOnClickListener(){
-
-            authViewModel.createAccount(email.text.toString(), password.text.toString(), this)
-            Log.d("bruh", email.toString())
-            Log.d("bruh", password.toString())
-            Log.d("bruh", "create account button was clicked")
+            findNavController().navigate(R.id.action_splashScreenFragment_to_createAccountFragment)
+//            authViewModel.createAccount(email.text.toString(), password.text.toString(), this)
+//            Log.d("bruh", email.toString())
+//            Log.d("bruh", password.toString())
+//            Log.d("bruh", "create account button was clicked")
 
 //            if(authViewModel.currentUser() != null){
 //                findNavController().navigate(R.id.action_splashScreenFragment_to_homeFragment)

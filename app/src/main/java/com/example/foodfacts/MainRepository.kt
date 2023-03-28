@@ -40,6 +40,7 @@ class MainRepository @Inject constructor(@ApplicationContext private var appCont
                     Log.d("Auth", "User account created")
                     currentUser = auth.currentUser
                     listener.goToHomeScreen()
+                    createCollection()
                 } else {
                     // sign in failed
                     Log.d("Auth", "User account creation failed", task.exception)

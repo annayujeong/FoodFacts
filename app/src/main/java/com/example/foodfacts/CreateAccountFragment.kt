@@ -1,6 +1,7 @@
 package com.example.foodfacts
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -9,6 +10,7 @@ import android.widget.Button
 import android.widget.EditText
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 import com.google.firebase.auth.FirebaseUser
 
 // TODO: Rename parameter arguments, choose names that match
@@ -21,7 +23,7 @@ private const val ARG_PARAM2 = "param2"
  * Use the [CreateAccountFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class CreateAccountFragment : Fragment() {
+class CreateAccountFragment : Fragment(), AuthenticationInterface {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
@@ -41,11 +43,16 @@ class CreateAccountFragment : Fragment() {
 
         val dataObserver = Observer<FirebaseUser>{}
 
-        val button = view.findViewById<Button>(R.id.createAccountButton)
+        val button = view.findViewById<Button>(R.id.button_createFragment)
+
+        val email = view.findViewById<EditText>(R.id.editTextEmailAddress_create)
+        val password = view.findViewById<EditText>(R.id.editTextPassword_create)
 
         button.setOnClickListener{
-            val email = view.findViewById<EditText>(R.id.editTextTextEmailAddress)
-            val password = view.findViewById<EditText>(R.id.editTextTextPassword)
+            authViewModel.createAccount(email.text.toString(), password.text.toString(), this)
+            Log.d("testing", email.text.toString())
+            Log.d("testing", password.text.toString())
+            Log.d("bruh", "create account button was clicked")
         }
     }
 
@@ -75,5 +82,9 @@ class CreateAccountFragment : Fragment() {
                     putString(ARG_PARAM2, param2)
                 }
             }
+    }
+
+    override fun goToHomeScreen() {
+        findNavController().navigate(R.id.action_createAccountFragment_to_homeFragment)
     }
 }
