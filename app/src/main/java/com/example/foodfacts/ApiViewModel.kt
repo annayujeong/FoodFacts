@@ -14,18 +14,18 @@ interface GenericDataListener {
 }
 
 @HiltViewModel
-class ApiViewModel @Inject constructor(private val mainRepository: MainRepository): ViewModel() {
+class ApiViewModel @Inject constructor(private val apiRepository: ApiRepository): ViewModel() {
     var genericLiveDataObject: MutableLiveData<HashMap<String, String>> = MutableLiveData<HashMap<String, String>>()
 
     fun updateDataWithLiveData(itemName: String, errorTextView: TextView) {
         val scope = CoroutineScope(Dispatchers.Main)
         scope.launch {
-            handleReturnedData(mainRepository.getFoodApiResult(itemName), errorTextView)
+            handleReturnedData(apiRepository.getFoodApiResult(itemName), errorTextView)
         }
     }
 
     private fun handleReturnedData(returnedData: HashMap<String, String>, errorTextView: TextView) {
-        if (mainRepository.didSingleItemEntered(returnedData)) {
+        if (apiRepository.didSingleItemEntered(returnedData)) {
             genericLiveDataObject.value = returnedData
         } else {
             errorTextView.text = "Enter a single item!"
