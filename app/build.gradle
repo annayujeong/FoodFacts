@@ -37,8 +37,17 @@ android {
     }
 }
 
-dependencies {
+def apikeyPropertiesFile = rootProject.file("api.properties")
+def apikeyProperties = new Properties()
+apikeyProperties.load(new FileInputStream(apikeyPropertiesFile))
+android {
+    defaultConfig {
+        buildConfigField("String", "NUTRITIONSIX_API_ID", apikeyProperties['NUTRITIONSIX_API_ID'])
+        buildConfigField("String", "NUTRITIONSIX_API_KEY", apikeyProperties['NUTRITIONSIX_API_KEY'])
+    }
+}
 
+dependencies {
     implementation 'androidx.core:core-ktx:1.7.0'
     implementation 'androidx.appcompat:appcompat:1.6.1'
     implementation 'com.google.android.material:material:1.8.0'
@@ -62,4 +71,17 @@ dependencies {
     implementation("com.google.dagger:hilt-android:2.44")
     kapt("com.google.dagger:hilt-android-compiler:2.44")
 
+    // ktor
+    implementation 'io.ktor:ktor-client-android:2.0.0'
+    implementation 'io.ktor:ktor-client-content-negotiation:2.0.0'
+    implementation 'io.ktor:ktor-serialization-gson:2.0.0'
+
+    // glide
+    implementation 'com.github.bumptech.glide:glide:4.12.0'
+
+    // nav host fragment
+    implementation('androidx.navigation:navigation-fragment:2.5.3')
+
+    // for menus
+    implementation('androidx.navigation:navigation-ui-ktx:2.5.3')
 }
