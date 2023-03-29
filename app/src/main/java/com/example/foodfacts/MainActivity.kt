@@ -1,5 +1,7 @@
 package com.example.foodfacts
 
+import android.content.ComponentName
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import dagger.hilt.android.AndroidEntryPoint
@@ -9,6 +11,14 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import android.util.Log
+import android.widget.Button
+import android.widget.Toast
+import androidx.activity.viewModels
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
+import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
@@ -25,6 +35,15 @@ class MainActivity : AppCompatActivity() {
         setupActionBarWithNavController(navController, appBarConfiguration)
 
         findViewById<BottomNavigationView>(R.id.bottomNav_main).setupWithNavController(navController)
+        
+        val authViewModel:AuthViewModel by viewModels()
+
+        //val cn = ComponentName(this, "org.tensorflow.lite.examples.imageclassification.MainActivity")
+        //val intent = Intent().setComponent(cn)
+        //startActivity(intent)
+
+        //val intent = Intent(this, org.tensorflow.lite.examples.imageclassification.MainActivity::class.java)
+        //startActivity(intent)
     }
 
 }
