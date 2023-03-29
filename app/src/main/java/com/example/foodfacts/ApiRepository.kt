@@ -17,7 +17,7 @@ import kotlinx.coroutines.async
 import javax.inject.Inject
 import kotlin.collections.HashMap
 
-class MainRepository@Inject constructor(@ApplicationContext private var appContext: Context){
+class ApiRepository@Inject constructor(@ApplicationContext private var appContext: Context){
 
     suspend fun getFoodApiResult(itemName: String): HashMap<String, String> {
         val scope = CoroutineScope(Dispatchers.Main)
