@@ -1,0 +1,100 @@
+1<?xml version="1.0" encoding="utf-8"?>
+2<!--
+3    ~ Copyright 2022 The TensorFlow Authors. All Rights Reserved.
+4    ~
+5    ~ Licensed under the Apache License, Version 2.0 (the "License");
+6    ~ you may not use this file except in compliance with the License.
+7    ~ You may obtain a copy of the License at
+8    ~
+9    ~       http://www.apache.org/licenses/LICENSE-2.0
+10    ~
+11    ~ Unless required by applicable law or agreed to in writing, software
+12    ~ distributed under the License is distributed on an "AS IS" BASIS,
+13    ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+14    ~ See the License for the specific language governing permissions and
+15    ~ limitations under the License.
+16-->
+17<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+18    xmlns:dist="http://schemas.android.com/apk/distribution"
+19    xmlns:tools="http://schemas.android.com/tools"
+20    package="org.tensorflow.lite.examples.imageclassification" >
+21
+22    <uses-sdk
+23        android:minSdkVersion="23"
+23-->/Users/Home/AndroidStudioProjects/term-project-anna-bradner-edmond/tensor/src/main/AndroidManifest.xml
+24        android:targetSdkVersion="32" />
+24-->/Users/Home/AndroidStudioProjects/term-project-anna-bradner-edmond/tensor/src/main/AndroidManifest.xml
+25
+26    <!-- Enable instant app support -->
+27    <dist:module dist:instant="true" />
+27-->/Users/Home/AndroidStudioProjects/term-project-anna-bradner-edmond/tensor/src/main/AndroidManifest.xml:23:5-40
+27-->/Users/Home/AndroidStudioProjects/term-project-anna-bradner-edmond/tensor/src/main/AndroidManifest.xml:23:18-37
+28
+29    <!-- Declare features -->
+30    <uses-feature android:name="android.hardware.camera" />
+30-->/Users/Home/AndroidStudioProjects/term-project-anna-bradner-edmond/tensor/src/main/AndroidManifest.xml:26:5-60
+30-->/Users/Home/AndroidStudioProjects/term-project-anna-bradner-edmond/tensor/src/main/AndroidManifest.xml:26:19-57
+31
+32    <!-- Declare permissions -->
+33    <uses-permission android:name="android.permission.CAMERA" />
+33-->/Users/Home/AndroidStudioProjects/term-project-anna-bradner-edmond/tensor/src/main/AndroidManifest.xml:29:5-65
+33-->/Users/Home/AndroidStudioProjects/term-project-anna-bradner-edmond/tensor/src/main/AndroidManifest.xml:29:22-62
+34
+35    <application
+35-->/Users/Home/AndroidStudioProjects/term-project-anna-bradner-edmond/tensor/src/main/AndroidManifest.xml:31:5-62:19
+36        android:allowBackup="true"
+36-->/Users/Home/AndroidStudioProjects/term-project-anna-bradner-edmond/tensor/src/main/AndroidManifest.xml:32:9-35
+37        android:icon="@mipmap/ic_launcher"
+37-->/Users/Home/AndroidStudioProjects/term-project-anna-bradner-edmond/tensor/src/main/AndroidManifest.xml:33:9-43
+38        android:label="@string/app_name"
+38-->/Users/Home/AndroidStudioProjects/term-project-anna-bradner-edmond/tensor/src/main/AndroidManifest.xml:34:9-41
+39        android:roundIcon="@mipmap/ic_launcher_round"
+39-->/Users/Home/AndroidStudioProjects/term-project-anna-bradner-edmond/tensor/src/main/AndroidManifest.xml:35:9-54
+40        android:supportsRtl="true"
+40-->/Users/Home/AndroidStudioProjects/term-project-anna-bradner-edmond/tensor/src/main/AndroidManifest.xml:36:9-35
+41        android:taskAffinity=""
+41-->/Users/Home/AndroidStudioProjects/term-project-anna-bradner-edmond/tensor/src/main/AndroidManifest.xml:37:9-32
+42        tools:ignore="AllowBackup" >
+42-->/Users/Home/AndroidStudioProjects/term-project-anna-bradner-edmond/tensor/src/main/AndroidManifest.xml:38:9-35
+43        <activity
+43-->/Users/Home/AndroidStudioProjects/term-project-anna-bradner-edmond/tensor/src/main/AndroidManifest.xml:40:9-61:20
+44            android:name="org.tensorflow.lite.examples.imageclassification.MainActivity"
+44-->/Users/Home/AndroidStudioProjects/term-project-anna-bradner-edmond/tensor/src/main/AndroidManifest.xml:41:13-41
+45            android:clearTaskOnLaunch="true"
+45-->/Users/Home/AndroidStudioProjects/term-project-anna-bradner-edmond/tensor/src/main/AndroidManifest.xml:42:13-45
+46            android:configChanges="orientation|screenLayout|screenSize|smallestScreenSize"
+46-->/Users/Home/AndroidStudioProjects/term-project-anna-bradner-edmond/tensor/src/main/AndroidManifest.xml:43:13-91
+47            android:exported="true"
+47-->/Users/Home/AndroidStudioProjects/term-project-anna-bradner-edmond/tensor/src/main/AndroidManifest.xml:44:13-36
+48            android:resizeableActivity="true"
+48-->/Users/Home/AndroidStudioProjects/term-project-anna-bradner-edmond/tensor/src/main/AndroidManifest.xml:45:13-46
+49            android:rotationAnimation="seamless"
+49-->/Users/Home/AndroidStudioProjects/term-project-anna-bradner-edmond/tensor/src/main/AndroidManifest.xml:46:13-49
+50            android:theme="@style/AppTheme"
+50-->/Users/Home/AndroidStudioProjects/term-project-anna-bradner-edmond/tensor/src/main/AndroidManifest.xml:47:13-44
+51            tools:targetApi="O" >
+51-->/Users/Home/AndroidStudioProjects/term-project-anna-bradner-edmond/tensor/src/main/AndroidManifest.xml:48:13-32
+52
+53            <!-- Main app intent filter -->
+54            <intent-filter>
+54-->/Users/Home/AndroidStudioProjects/term-project-anna-bradner-edmond/tensor/src/main/AndroidManifest.xml:51:13-55:29
+55                <action android:name="android.intent.action.MAIN" />
+55-->/Users/Home/AndroidStudioProjects/term-project-anna-bradner-edmond/tensor/src/main/AndroidManifest.xml:52:17-69
+55-->/Users/Home/AndroidStudioProjects/term-project-anna-bradner-edmond/tensor/src/main/AndroidManifest.xml:52:25-66
+56
+57                <category android:name="android.intent.category.LAUNCHER" />
+57-->/Users/Home/AndroidStudioProjects/term-project-anna-bradner-edmond/tensor/src/main/AndroidManifest.xml:54:17-77
+57-->/Users/Home/AndroidStudioProjects/term-project-anna-bradner-edmond/tensor/src/main/AndroidManifest.xml:54:27-74
+58            </intent-filter>
+59
+60            <!-- Declare notch support -->
+61            <meta-data
+61-->/Users/Home/AndroidStudioProjects/term-project-anna-bradner-edmond/tensor/src/main/AndroidManifest.xml:58:13-60:40
+62                android:name="android.notch_support"
+62-->/Users/Home/AndroidStudioProjects/term-project-anna-bradner-edmond/tensor/src/main/AndroidManifest.xml:59:17-53
+63                android:value="true" />
+63-->/Users/Home/AndroidStudioProjects/term-project-anna-bradner-edmond/tensor/src/main/AndroidManifest.xml:60:17-37
+64        </activity>
+65    </application>
+66
+67</manifest>
