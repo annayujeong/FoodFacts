@@ -10,14 +10,23 @@ import android.widget.TextView
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import com.bumptech.glide.Glide
+import com.example.foodfacts.databinding.FragmentResultBinding
 
 class ResultFragment : Fragment() {
+
+    private var _binding: FragmentResultBinding? = null
+    private val binding get() = _binding!!
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.fragment_result, container, false)
+    ): View {
+        // setup result fragment binder
+        _binding = FragmentResultBinding.inflate(inflater, container, false)
+
+        // inflate the layout for this fragment
+        return binding.root
+//        return inflater.inflate(R.layout.fragment_result, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -27,14 +36,18 @@ class ResultFragment : Fragment() {
             println("===== result fragment =====")
             println(newData)
 
-            val resultImageView = view.findViewById<ImageView>(R.id.imageView_result)
-            Glide.with(resultImageView).load(newData[FoodConstants.IMAGE_URL]).into(resultImageView)
-            view.findViewById<TextView>(R.id.textView_name_result).text = newData[FoodConstants.NAME]
-            view.findViewById<TextView>(R.id.textView_fat_result).text = newData[FoodConstants.TOTAL_FAT]
-            view.findViewById<TextView>(R.id.textView_calories_result).text = newData[FoodConstants.CALORIES]
-            view.findViewById<TextView>(R.id.textView_protein_result).text = newData[FoodConstants.PROTEIN]
+            Glide.with(binding.imageViewResult).load(newData[FoodConstants.IMAGE_URL]).into(binding.imageViewResult)
+            binding.textViewNameResult.text = newData[FoodConstants.NAME]
+            binding.textViewFatResult.text = newData[FoodConstants.TOTAL_FAT]
+            binding.textViewCaloriesResult.text = newData[FoodConstants.CALORIES]
+            binding.textViewProteinResult.text = newData[FoodConstants.PROTEIN]
         }
         apiViewModel.genericLiveDataObject.observe(viewLifecycleOwner, dataObserver)
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 
 }
