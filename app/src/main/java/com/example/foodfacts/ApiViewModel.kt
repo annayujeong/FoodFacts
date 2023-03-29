@@ -1,14 +1,9 @@
 package com.example.foodfacts
 
-import android.content.Context
-import android.content.Intent
-import androidx.core.content.ContextCompat.startActivity
-import androidx.core.os.bundleOf
+import android.widget.TextView
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.google.gson.JsonObject
 import dagger.hilt.android.lifecycle.HiltViewModel
-import io.ktor.client.statement.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -22,15 +17,19 @@ interface GenericDataListener {
 class ApiViewModel @Inject constructor(private val mainRepository: MainRepository): ViewModel() {
     var genericLiveDataObject: MutableLiveData<HashMap<String, String>> = MutableLiveData<HashMap<String, String>>()
 
-    lateinit var genericDataListener: GenericDataListener
-
-    fun goToResultActivity(appContext: Context, itemName: String) {
+    fun updateDataWithLiveData(itemName: String, errorTextView: TextView) {
         val scope = CoroutineScope(Dispatchers.Main)
         scope.launch {
-            val intent = Intent(appContext, ResultActivity::class.java)
-            intent.putExtra("RESULT_ITEM", mainRepository.createHttpRequest(itemName))
+            handleReturnedData(mainRepository.getFoodApiResult(itemName), errorTextView)
+        }
+    }
 
-            appContext.startActivity(intent)
+    private fun handleReturnedData(returnedData: HashMap<String, String>, errorTextView: TextView) {
+        if (mainRepository.didSingleItemEntered(returnedData)) {
+            genericLiveDataObject.value = returnedData
+        } else {
+            errorTextView.text = "Enter a single item!"
+            println("quantity is not 1") // TODO: remove
         }
     }
 }

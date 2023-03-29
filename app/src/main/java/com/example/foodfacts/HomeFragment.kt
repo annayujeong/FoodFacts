@@ -5,6 +5,11 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import android.widget.TextView
+import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -35,6 +40,25 @@ class HomeFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_home, container, false)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        val apiViewModel: ApiViewModel by activityViewModels()
+
+        val button = view.findViewById<Button>(R.id.button_home)
+        val text = view.findViewById<TextView>(R.id.textView_food_name_home).text.toString()
+
+        val errorTextView = view.findViewById<TextView>(R.id.textView_error_home)
+        button.setOnClickListener {
+            apiViewModel.updateDataWithLiveData(text, errorTextView)
+        }
+
+        val dataObserver = Observer<HashMap<String, String>> {
+            findNavController().navigate(R.id.action_homeFragment_to_resultFragment)
+        }
+        apiViewModel.genericLiveDataObject.observe(viewLifecycleOwner, dataObserver)
     }
 
     companion object {

@@ -1,6 +1,7 @@
 package com.example.foodfacts
 
 import android.content.Context
+import com.google.gson.JsonElement
 import com.google.gson.JsonObject
 import dagger.hilt.android.qualifiers.ApplicationContext
 import io.ktor.client.*
@@ -14,9 +15,11 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import javax.inject.Inject
+import kotlin.collections.HashMap
 
-class MainRepository@Inject constructor(@ApplicationContext private var appContext: Context){ // TODO: use this context to call another activity
-    suspend fun createHttpRequest(itemName: String): HashMap<String, String> { // TODO: refactor this function
+class MainRepository@Inject constructor(@ApplicationContext private var appContext: Context){
+
+    suspend fun getFoodApiResult(itemName: String): HashMap<String, String> {
         val scope = CoroutineScope(Dispatchers.Main)
         val request = scope.async {
             val client = HttpClient {
@@ -24,35 +27,44 @@ class MainRepository@Inject constructor(@ApplicationContext private var appConte
                     gson()
                 }
             }
-            val url = "https://trackapi.nutritionix.com/v2/natural/nutrients"
-            val response = client.post(url) {
+            val response = client.post(ApiConstants.API_URL) {
                 headers {
-                    append("x-app-id", "a644998d") // TODO: use env
-                    append("x-app-key", "8097f84bafeb7ed6f04e7db575eeeb7c")
-                    append("x-remote-user-id", "0")
+                    append(ApiConstants.APP_ID, BuildConfig.NUTRITIONSIX_API_ID)
+                    append(ApiConstants.APP_KEY, BuildConfig.NUTRITIONSIX_API_KEY)
                 }
                 setBody(FormDataContent(Parameters.build {
-                    append("query", itemName)
+                    append(ApiConstants.QUERY, itemName)
                 }))
             }
             return@async response
         }
-
         val getResultList = scope.async {
             val response = request.await()
-            val foodJsonObject = response.body<JsonObject>().get("foods").asJsonArray.get(0).asJsonObject
-
-            val resultMap = hashMapOf<String, String>() // TODO: use constants
-            resultMap["food_name"] = foodJsonObject.get("food_name").toString()
-            resultMap["nf_calories"] = foodJsonObject.get("nf_calories").toString()
-            resultMap["nf_total_fat"] = foodJsonObject.get("nf_total_fat").toString()
-            resultMap["nf_protein"] = foodJsonObject.get("nf_protein").toString()
-            resultMap["nf_protein"] = foodJsonObject.get("photo").asJsonObject.get("thumb").toString()
-            println("==== in model ====")
-            println(resultMap)
-            return@async resultMap
+            val foodJsonObject = response.body<JsonObject>().get(FoodConstants.FOODS).asJsonArray.get(0).asJsonObject
+            return@async putJsonObjectInHashMap(foodJsonObject)
         }
         return getResultList.await()
+    }
+
+    private fun putJsonObjectInHashMap(foodJsonObject: JsonObject): HashMap<String, String> {
+        val resultMap = hashMapOf<String, String>()
+        resultMap[FoodConstants.QUANTITY] = formatJsonElementToString(foodJsonObject.get(FoodConstants.QUANTITY))
+        resultMap[FoodConstants.NDB_NO] = formatJsonElementToString(foodJsonObject.get(FoodConstants.NDB_NO))
+        resultMap[FoodConstants.NAME] = formatJsonElementToString(foodJsonObject.get(FoodConstants.NAME))
+        resultMap[FoodConstants.CALORIES] = formatJsonElementToString(foodJsonObject.get(FoodConstants.CALORIES))
+        resultMap[FoodConstants.TOTAL_FAT] = formatJsonElementToString(foodJsonObject.get(FoodConstants.TOTAL_FAT))
+        resultMap[FoodConstants.PROTEIN] = formatJsonElementToString(foodJsonObject.get(FoodConstants.PROTEIN))
+        resultMap[FoodConstants.IMAGE_URL] = formatJsonElementToString(foodJsonObject.get(FoodConstants.IMAGE_URL).asJsonObject.get(FoodConstants.THUMBNAIL))
+        return resultMap
+    }
+
+    fun didSingleItemEntered(returnedData: HashMap<String, String>): Boolean {
+        val quantity = returnedData[FoodConstants.QUANTITY]!!.toInt()
+        return quantity == 1
+    }
+
+    private fun formatJsonElementToString(jsonElement: JsonElement): String {
+        return jsonElement.toString().replace("\"", "")
     }
 
 }
