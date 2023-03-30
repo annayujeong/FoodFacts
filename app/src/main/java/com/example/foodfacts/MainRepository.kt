@@ -3,6 +3,7 @@ package com.example.foodfacts
 import android.content.Context
 import android.util.Log
 import android.widget.Toast
+import android.window.OnBackInvokedCallback
 
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
@@ -11,8 +12,15 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import dagger.hilt.android.qualifiers.ApplicationContext
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
+import javax.inject.Singleton
 
+@Singleton
 class MainRepository @Inject constructor(@ApplicationContext private var appContext: Context) {
 
     // reading/writing or fetching/posting data to remote
@@ -108,8 +116,24 @@ class MainRepository @Inject constructor(@ApplicationContext private var appCont
         currentUser?.let { db.collection(it.uid).document("apple").set(testData) }
     }
 
-    fun addItem(){
-        // TODO: add item to collection
+    fun addItem(foodInfo: HashMap<String, String>) {
+        val ndbNumber = foodInfo[FoodConstants.NDB_NO]!!
+        auth.currentUser?.let {
+            db.collection(it.uid).document(ndbNumber).set(foodInfo)
+        }
+    }
+
+    fun didItemExist(ndbNumber: String, callback: () -> Unit) {
+        auth.currentUser?.let {
+            db.collection(it.uid).document(ndbNumber).get().addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    val document = task.result
+                    if (task.result != null && document.exists()) {
+                        callback.invoke()
+                    }
+                }
+            }
+        }
     }
 
     fun removeItem(){
