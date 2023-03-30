@@ -68,7 +68,7 @@ class HomeFragment : Fragment() {
 
             override fun onQueryTextSubmit(query: String): Boolean {
                 Log.d("bruh", search.query.toString())
-                apiViewModel.updateDataWithLiveData(search.query.toString(), errorTextView)
+                apiViewModel.updateDataWithLiveData(search.query.toString())
                 return false
             }
 
@@ -78,7 +78,7 @@ class HomeFragment : Fragment() {
         })
 
         button.setOnClickListener {
-            apiViewModel.updateDataWithLiveData(search.query.toString(), errorTextView)
+            apiViewModel.updateDataWithLiveData(search.query.toString())
         }
     }
     companion object {

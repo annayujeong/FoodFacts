@@ -40,13 +40,6 @@ class MainActivity : AppCompatActivity() {
 
 //        val foodViewModel:FoodViewModel by viewModels()
 //        foodViewModel.getRandom()
-
-        //val cn = ComponentName(this, "org.tensorflow.lite.examples.imageclassification.MainActivity")
-        //val intent = Intent().setComponent(cn)
-        //startActivity(intent)
-
-        //val intent = Intent(this, org.tensorflow.lite.examples.imageclassification.MainActivity::class.java)
-        //startActivity(intent)
     }
 
 }
