@@ -51,9 +51,8 @@ class HomeFragment : Fragment() {
         val button = view.findViewById<Button>(R.id.button_home)
         val text = view.findViewById<TextView>(R.id.textView_food_name_home).text.toString()
 
-        val errorTextView = view.findViewById<TextView>(R.id.textView_error_home)
         button.setOnClickListener {
-            apiViewModel.updateDataWithLiveData(text, errorTextView)
+            apiViewModel.updateDataWithLiveData(text)
         }
 
         val dataObserver = Observer<HashMap<String, String>> {
