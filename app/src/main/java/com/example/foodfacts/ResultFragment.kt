@@ -1,40 +1,67 @@
 package com.example.foodfacts
 
+import android.graphics.Color
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.TextView
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import com.bumptech.glide.Glide
+import com.example.foodfacts.databinding.FragmentResultBinding
 
 class ResultFragment : Fragment() {
+
+    private var _binding: FragmentResultBinding? = null
+    private val binding get() = _binding!!
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.fragment_result, container, false)
+    ): View {
+        _binding = FragmentResultBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val apiViewModel: ApiViewModel by activityViewModels()
-        val dataObserver = Observer<HashMap<String, String>> { newData ->
-            println("===== result fragment =====")
-            println(newData)
 
-            val resultImageView = view.findViewById<ImageView>(R.id.imageView_result)
-            Glide.with(resultImageView).load(newData[FoodConstants.IMAGE_URL]).into(resultImageView)
-            view.findViewById<TextView>(R.id.textView_name_result).text = newData[FoodConstants.NAME]
-            view.findViewById<TextView>(R.id.textView_fat_result).text = newData[FoodConstants.TOTAL_FAT]
-            view.findViewById<TextView>(R.id.textView_calories_result).text = newData[FoodConstants.CALORIES]
-            view.findViewById<TextView>(R.id.textView_protein_result).text = newData[FoodConstants.PROTEIN]
+        val apiViewModel: ApiViewModel by activityViewModels()
+        val foodViewModel: FoodViewModel by activityViewModels()
+
+        var returnedData = HashMap<String, String>()
+        val dataObserver = Observer<HashMap<String, String>> { newData ->
+            returnedData = newData
+            updateViewsOnNewData(foodViewModel, returnedData)
         }
         apiViewModel.genericLiveDataObject.observe(viewLifecycleOwner, dataObserver)
+
+        binding.buttonSaveResult.setOnClickListener {
+            foodViewModel.addToFavouriteItems(returnedData)
+        }
+    }
+
+    private fun disableButtonIfItemExist() {
+        binding.buttonSaveResult.isEnabled = false
+        binding.buttonSaveResult.isClickable = false
+        binding.buttonSaveResult.setBackgroundColor(Color.GRAY)
+    }
+
+    private fun updateViewsOnNewData(foodViewModel: FoodViewModel, returnedData: HashMap<String, String>) {
+        foodViewModel.checkItemExist(returnedData[FoodConstants.NDB_NO]!!) {
+            disableButtonIfItemExist()
+        }
+        Glide.with(binding.imageViewResult).load(returnedData[FoodConstants.IMAGE_URL]).into(binding.imageViewResult)
+        binding.textViewNameResult.text = returnedData[FoodConstants.NAME]
+        binding.textViewFatResult.text = returnedData[FoodConstants.TOTAL_FAT]
+        binding.textViewCaloriesResult.text = returnedData[FoodConstants.CALORIES]
+        binding.textViewProteinResult.text = returnedData[FoodConstants.PROTEIN]
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 
 }

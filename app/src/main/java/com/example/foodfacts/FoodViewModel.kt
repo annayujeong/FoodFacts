@@ -7,11 +7,14 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 
 // ViewModel responsible for handling calls/other stuff to the Firebase database
 // handling user information and account?
 
-class FoodViewModel: ViewModel() {
+@HiltViewModel
+class FoodViewModel @Inject constructor(private val mainRepository: MainRepository): ViewModel() {
 
     // TODO: sign in and account creation here?
 
@@ -40,10 +43,12 @@ class FoodViewModel: ViewModel() {
         }
     }
 
-    fun addToFavouriteItems(){
-        if(currentUser != null){
-            // TODO:
-        }
+    fun addToFavouriteItems(foodInfo: HashMap<String, String>) {
+        mainRepository.addItem(foodInfo)
+    }
+
+    fun checkItemExist(ndbNumber: String, callback: () -> Unit) {
+        mainRepository.didItemExist(ndbNumber, callback)
     }
 
 }
