@@ -1,5 +1,6 @@
 package com.example.foodfacts
 
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.google.firebase.auth.FirebaseAuth
@@ -29,6 +30,10 @@ class AuthViewModel @Inject constructor(private val mainRepository: MainReposito
 //        db = Firebase.firestore
 //        auth = Firebase.auth
 //    }
+
+    fun getRandom(){
+        Log.d("Testing", mainRepository.singletonTest.toString())
+    }
 
     fun createAccount(email:String, password:String, listener: AuthenticationInterface){
         mainRepository.initialize()

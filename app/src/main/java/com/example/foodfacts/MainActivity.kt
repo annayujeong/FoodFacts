@@ -1,6 +1,5 @@
 package com.example.foodfacts
 
-
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import dagger.hilt.android.AndroidEntryPoint
@@ -11,6 +10,7 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.activity.viewModels
+import androidx.appcompat.widget.Toolbar
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
@@ -23,19 +23,23 @@ class MainActivity : AppCompatActivity() {
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.fragmentContainerView_main) as NavHostFragment
         navController = navHostFragment.navController
 
+        supportActionBar?.hide()
+
+        var toolbar:Toolbar = findViewById(R.id.materialToolbar)
+        //setSupportActionBar(supportActionBar)
+        setSupportActionBar(toolbar)
+        supportActionBar?.hide()
+
         val appBarConfiguration = AppBarConfiguration(navController.graph)
         setupActionBarWithNavController(navController, appBarConfiguration)
 
         findViewById<BottomNavigationView>(R.id.bottomNav_main).setupWithNavController(navController)
         
         val authViewModel:AuthViewModel by viewModels()
+        authViewModel.getRandom()
 
-        //val cn = ComponentName(this, "org.tensorflow.lite.examples.imageclassification.MainActivity")
-        //val intent = Intent().setComponent(cn)
-        //startActivity(intent)
-
-        //val intent = Intent(this, org.tensorflow.lite.examples.imageclassification.MainActivity::class.java)
-        //startActivity(intent)
+//        val foodViewModel:FoodViewModel by viewModels()
+//        foodViewModel.getRandom()
     }
 
 }
