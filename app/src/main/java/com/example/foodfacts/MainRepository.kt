@@ -12,7 +12,10 @@ import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
+import javax.inject.Singleton
+import kotlin.random.Random
 
+@Singleton
 class MainRepository @Inject constructor(@ApplicationContext private var appContext: Context) {
 
     // reading/writing or fetching/posting data to remote
@@ -25,6 +28,8 @@ class MainRepository @Inject constructor(@ApplicationContext private var appCont
     //lateinit var currentUser: FirebaseUser
 
     private var currentUser: FirebaseUser? = null
+
+    var singletonTest = (0..10000000000000).random()
 
     fun initialize(){
         db = Firebase.firestore
@@ -77,7 +82,9 @@ class MainRepository @Inject constructor(@ApplicationContext private var appCont
                     createCollection()
                 } else {
                     // sign in failed
-                    Log.d("Auth", "Sign in with email failed")
+                    Log.d("Auth", email)
+                    Log.d("Auth", password)
+                    Log.d("Auth", "Sign in with email failed", task.exception)
                     Toast.makeText(appContext, "Authentication failed",
                     Toast.LENGTH_SHORT).show()
                 }

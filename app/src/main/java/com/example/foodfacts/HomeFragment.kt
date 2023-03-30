@@ -1,12 +1,16 @@
 package com.example.foodfacts
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.OnAttachStateChangeListener
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.EditText
+import android.widget.SearchView
 import android.widget.TextView
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
@@ -52,14 +56,30 @@ class HomeFragment : Fragment() {
         val text = view.findViewById<TextView>(R.id.textView_food_name_home).text.toString()
 
         val errorTextView = view.findViewById<TextView>(R.id.textView_error_home)
-        button.setOnClickListener {
-            apiViewModel.updateDataWithLiveData(text, errorTextView)
-        }
 
         val dataObserver = Observer<HashMap<String, String>> {
             findNavController().navigate(R.id.action_homeFragment_to_resultFragment)
         }
         apiViewModel.genericLiveDataObject.observe(viewLifecycleOwner, dataObserver)
+
+        val search = view.findViewById<SearchView>(R.id.searchView)
+
+        search.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+
+            override fun onQueryTextSubmit(query: String): Boolean {
+                Log.d("bruh", search.query.toString())
+                apiViewModel.updateDataWithLiveData(search.query.toString(), errorTextView)
+                return false
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                return false
+            }
+        })
+
+        button.setOnClickListener {
+            apiViewModel.updateDataWithLiveData(search.query.toString(), errorTextView)
+        }
     }
     companion object {
         /**

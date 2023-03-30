@@ -1,5 +1,6 @@
 package com.example.foodfacts
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
@@ -7,24 +8,32 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 
 // ViewModel responsible for handling calls/other stuff to the Firebase database
 // handling user information and account?
 
-class FoodViewModel: ViewModel() {
 
+@HiltViewModel
+class FoodViewModel @Inject constructor(private val mainRepository: MainRepository): ViewModel() {
+//class FoodViewModel: ViewModel(){
     // TODO: sign in and account creation here?
 
-    lateinit var db: FirebaseFirestore
+//    lateinit var db: FirebaseFirestore
+//
+//    private lateinit var auth: FirebaseAuth
+//
+//    private var currentUser: FirebaseUser? = null
 
-    private lateinit var auth: FirebaseAuth
+//    fun getRandom(){
+//        Log.d("Testing", mainRepository.singletonTest.toString())
+//    }
 
-    private var currentUser: FirebaseUser? = null
-
-    fun initialize(){
-        db = Firebase.firestore
-        auth = Firebase.auth
-    }
+//    fun initialize(){
+//        db = Firebase.firestore
+//        auth = Firebase.auth
+//    }
 
     fun createAccount(){
 
@@ -34,16 +43,16 @@ class FoodViewModel: ViewModel() {
         // TODO:
     }
 
-    fun getFavouriteItems(){
-        if(currentUser != null){
-            // TODO:
-        }
-    }
+//    fun getFavouriteItems(){
+//        if(currentUser != null){
+//            // TODO:
+//        }
+//    }
 
-    fun addToFavouriteItems(){
-        if(currentUser != null){
-            // TODO:
-        }
-    }
+//    fun addToFavouriteItems(){
+//        if(currentUser != null){
+//            // TODO:
+//        }
+//    }
 
 }
