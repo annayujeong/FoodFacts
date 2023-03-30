@@ -3,8 +3,6 @@ package com.example.foodfacts
 import android.content.Context
 import android.util.Log
 import android.widget.Toast
-import android.window.OnBackInvokedCallback
-
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.ktx.auth
@@ -12,11 +10,6 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import dagger.hilt.android.qualifiers.ApplicationContext
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.async
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -117,9 +110,8 @@ class MainRepository @Inject constructor(@ApplicationContext private var appCont
     }
 
     fun addItem(foodInfo: HashMap<String, String>) {
-        val ndbNumber = foodInfo[FoodConstants.NDB_NO]!!
         auth.currentUser?.let {
-            db.collection(it.uid).document(ndbNumber).set(foodInfo)
+            db.collection(it.uid).document(foodInfo[FoodConstants.NDB_NO]!!).set(foodInfo)
         }
     }
 
