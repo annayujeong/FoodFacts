@@ -3,7 +3,6 @@ package com.example.foodfacts
 import android.content.Context
 import android.util.Log
 import android.widget.Toast
-
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.ktx.auth
@@ -13,7 +12,6 @@ import com.google.firebase.ktx.Firebase
 import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 import javax.inject.Singleton
-import kotlin.random.Random
 
 @Singleton
 class MainRepository @Inject constructor(@ApplicationContext private var appContext: Context) {
@@ -115,8 +113,23 @@ class MainRepository @Inject constructor(@ApplicationContext private var appCont
         currentUser?.let { db.collection(it.uid).document("apple").set(testData) }
     }
 
-    fun addItem(){
-        // TODO: add item to collection
+    fun addItem(foodInfo: HashMap<String, String>) {
+        auth.currentUser?.let {
+            db.collection(it.uid).document(foodInfo[FoodConstants.NDB_NO]!!).set(foodInfo)
+        }
+    }
+
+    fun didItemExist(ndbNumber: String, callback: () -> Unit) {
+        auth.currentUser?.let {
+            db.collection(it.uid).document(ndbNumber).get().addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    val document = task.result
+                    if (task.result != null && document.exists()) {
+                        callback.invoke()
+                    }
+                }
+            }
+        }
     }
 
     fun removeItem(){

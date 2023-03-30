@@ -14,45 +14,45 @@ import javax.inject.Inject
 // ViewModel responsible for handling calls/other stuff to the Firebase database
 // handling user information and account?
 
-
 @HiltViewModel
 class FoodViewModel @Inject constructor(private val mainRepository: MainRepository): ViewModel() {
 //class FoodViewModel: ViewModel(){
     // TODO: sign in and account creation here?
 
-//    lateinit var db: FirebaseFirestore
-//
-//    private lateinit var auth: FirebaseAuth
-//
-//    private var currentUser: FirebaseUser? = null
+    lateinit var db: FirebaseFirestore
 
-//    fun getRandom(){
-//        Log.d("Testing", mainRepository.singletonTest.toString())
-//    }
+    private lateinit var auth: FirebaseAuth
 
-//    fun initialize(){
-//        db = Firebase.firestore
-//        auth = Firebase.auth
-//    }
+    private var currentUser: FirebaseUser? = null
 
-    fun createAccount(){
+    fun getRandom() {
+        Log.d("Testing", mainRepository.singletonTest.toString())
+    }
+
+    fun initialize() {
+        db = Firebase.firestore
+        auth = Firebase.auth
+    }
+
+    fun createAccount() {
 
     }
 
-    fun signIn(){
+    fun signIn() {
         // TODO:
     }
 
-//    fun getFavouriteItems(){
-//        if(currentUser != null){
-//            // TODO:
-//        }
-//    }
+    fun getFavouriteItems() {
+        if (currentUser != null) {
+            // TODO:
+        }
+    }
 
-//    fun addToFavouriteItems(){
-//        if(currentUser != null){
-//            // TODO:
-//        }
-//    }
+    fun addToFavouriteItems(foodInfo: HashMap<String, String>) {
+        mainRepository.addItem(foodInfo)
+    }
 
+    fun checkItemExist(ndbNumber: String, callback: () -> Unit) {
+        mainRepository.didItemExist(ndbNumber, callback)
+    }
 }
