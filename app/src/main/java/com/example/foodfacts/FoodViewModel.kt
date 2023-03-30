@@ -8,28 +8,25 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 // ViewModel responsible for handling calls/other stuff to the Firebase database
 // handling user information and account?
 
 @HiltViewModel
-class FoodViewModel @Inject constructor(private val foodRepository: FoodRepository) : ViewModel() {
+class FoodViewModel @Inject constructor(private val mainRepository: MainRepository): ViewModel() {
 
     // TODO: sign in and account creation here?
 
-    fun initialize(){
-        val scope = CoroutineScope(Dispatchers.Main)
-        scope.launch {
-            foodRepository.initialize()
-        }
-    }
+    lateinit var db: FirebaseFirestore
 
-    fun returnFoodItemList(): ArrayList<FoodItem> {
-        return foodRepository.foodList
+    private lateinit var auth: FirebaseAuth
+
+    private var currentUser: FirebaseUser? = null
+
+    fun initialize(){
+        db = Firebase.firestore
+        auth = Firebase.auth
     }
 
     fun createAccount(){
@@ -40,5 +37,18 @@ class FoodViewModel @Inject constructor(private val foodRepository: FoodReposito
         // TODO:
     }
 
+    fun getFavouriteItems(){
+        if(currentUser != null){
+            // TODO:
+        }
+    }
+
+    fun addToFavouriteItems(foodInfo: HashMap<String, String>) {
+        mainRepository.addItem(foodInfo)
+    }
+
+    fun checkItemExist(ndbNumber: String, callback: () -> Unit) {
+        mainRepository.didItemExist(ndbNumber, callback)
+    }
 
 }
