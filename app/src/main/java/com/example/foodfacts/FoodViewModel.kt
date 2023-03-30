@@ -14,7 +14,7 @@ import javax.inject.Inject
 // handling user information and account?
 
 @HiltViewModel
-class FoodViewModel @Inject constructor(private val mainRepository: MainRepository): ViewModel() {
+class FoodViewModel @Inject constructor(private val mainRepository: MainRepository, private val foodRepository: FoodRepository): ViewModel() {
 
     // TODO: sign in and account creation here?
 
@@ -37,11 +37,14 @@ class FoodViewModel @Inject constructor(private val mainRepository: MainReposito
         // TODO:
     }
 
-    fun getFavouriteItems(){
-        if(currentUser != null){
-            // TODO:
-        }
+    fun getFavouriteItems(callback: (foodList: List<FoodItem>) -> Unit){
+        foodRepository.getFoodList(callback)
     }
+
+    fun getFoodListAlrInit(): List<FoodItem> {
+        return foodRepository.foodList
+    }
+
 
     fun addToFavouriteItems(foodInfo: HashMap<String, String>) {
         mainRepository.addItem(foodInfo)

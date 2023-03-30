@@ -3,17 +3,19 @@ package com.example.foodfacts
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 
 
-class FoodItemAdapter(private val mList: List<FoodItem>) :
+class FoodItemAdapter(private val mList: List<FoodItem>, private val listener: NavigateToFoodDescriptionListener) :
     RecyclerView.Adapter<FoodItemAdapter.ViewHolder>() {
 
     // Holds the views
     class ViewHolder(ItemView: View) : RecyclerView.ViewHolder(ItemView) {
         //val textView: TextView = itemView.findViewById(R.id.textView)
         val foodCardItemName: TextView = itemView.findViewById(R.id.textView_foodFactCard)
+        val button: Button = itemView.findViewById(R.id.button_FoodItem_toDescription)
     }
 
     // create new views
@@ -33,6 +35,11 @@ class FoodItemAdapter(private val mList: List<FoodItem>) :
         //holder.textView.text = mList[position]
 
         holder.foodCardItemName.text = mList[position].foodName
+
+        holder.button.setOnClickListener {
+            listener.onNavigateToFoodDescription(mList[position])
+        }
+
     }
 
     // return the number of the items in the list

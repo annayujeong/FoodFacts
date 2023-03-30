@@ -44,4 +44,10 @@
         android:layout_height="wrap_content"
         android:text="TextView" />
 
+    <Button
+        android:id="@+id/button_FoodItemDescription_deleteFood"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Delete Food" />
+
 </LinearLayout>

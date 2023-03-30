@@ -5,9 +5,13 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.foodfacts.databinding.FragmentFoodItemListBinding
+import com.example.foodfacts.databinding.FragmentResultBinding
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -24,6 +28,9 @@ class FoodItemListFragment : Fragment(), NavigateToFoodDescriptionListener {
     private var param1: String? = null
     private var param2: String? = null
 
+    private var _binding: FragmentFoodItemListBinding? = null
+    private val binding get() = _binding!!
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -37,21 +44,25 @@ class FoodItemListFragment : Fragment(), NavigateToFoodDescriptionListener {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_food_item_list, container, false)
+        _binding = FragmentFoodItemListBinding.inflate(inflater, container, false)
+        return binding.root
+    }
+
+    fun setUpRecyclerView(foodItems: List<FoodItem>) {
+        val adapter = FoodItemAdapter(foodItems, this)
+        val foodRecyclerView = binding.recyclerViewFoodFragmentList
+        foodRecyclerView.adapter = adapter
+        foodRecyclerView.layoutManager = LinearLayoutManager(activity)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         val foodViewModel:FoodViewModel by activityViewModels()
         foodViewModel.initialize()
+        foodViewModel.getFavouriteItems() {
+            setUpRecyclerView(it)
+        }
 
-        val foodRecyclerView = view.findViewById<RecyclerView>(R.id.recyclerView_foodFragmentList)
 
-        val adapter = FoodItemAdapter(foodViewModel.returnFoodItemList())
-
-        println(foodViewModel.returnFoodItemList())
-
-        foodRecyclerView.adapter = adapter
-        foodRecyclerView.layoutManager = LinearLayoutManager(activity)
     }
 
     companion object {
@@ -75,6 +86,7 @@ class FoodItemListFragment : Fragment(), NavigateToFoodDescriptionListener {
     }
 
     override fun onNavigateToFoodDescription(foodItem: FoodItem) {
-        TODO("Not yet implemented")
+        val bundle = bundleOf("key" to foodItem.nbdNo)
+        findNavController().navigate(R.id.action_foodItemListFragment_to_foodItemDescriptionFragment, bundle)
     }
 }

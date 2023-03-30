@@ -12,6 +12,7 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class FoodRepository @Inject constructor(@ApplicationContext private var appContext: Context) {
@@ -24,16 +25,15 @@ class FoodRepository @Inject constructor(@ApplicationContext private var appCont
 
     val foodList = ArrayList<FoodItem>()
 
-    suspend fun initialize() {
+    fun getFoodList(callback: (foodList: List<FoodItem>) -> Unit) {
         db = Firebase.firestore
         auth = Firebase.auth
         val auth = FirebaseAuth.getInstance()
         val uid = auth.currentUser?.uid
-        println(uid)
 
         val scope = CoroutineScope(Dispatchers.Main)
 
-        scope.async {
+        scope.launch {
             db.collection(uid.toString())
                 .get()
                 .addOnSuccessListener { result ->
@@ -47,15 +47,17 @@ class FoodRepository @Inject constructor(@ApplicationContext private var appCont
                             photoUrl = document.data["photo"].toString(),
                             servingQty = document.data["serving_qty"].toString()
                         )
-
                         foodList.add(newFoodItem)
                     }
-                }
-                .addOnFailureListener { exception ->
-                    Log.w("data", "Error getting documents.", exception)
+
+                    if (foodList.isNotEmpty()) {
+                        callback.invoke(foodList)
+                    }
                 }
         }
+
     }
+
 
 
 

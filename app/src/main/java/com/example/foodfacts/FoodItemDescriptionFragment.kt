@@ -5,6 +5,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
+import androidx.fragment.app.activityViewModels
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -35,6 +37,25 @@ class FoodItemDescriptionFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_food_item_description, container, false)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        val foodViewModel: FoodViewModel by activityViewModels()
+
+        val currQuest =  arguments?.get("key")
+
+        val foodName = view.findViewById<TextView>(R.id.textView_FoodItemDescription_name)
+        val foodProtein = view.findViewById<TextView>(R.id.textView_FoodItemDescription_protein)
+        val foodFat = view.findViewById<TextView>(R.id.textView_FoodItemDescription_total_fat)
+
+        val individualFoodItem = foodViewModel.getFoodListAlrInit().filter {x -> x.nbdNo == currQuest}
+
+        for (food in individualFoodItem) {
+            foodName.text = food.foodName
+            foodProtein.text = food.protein
+            foodFat.text = food.totalFat
+        }
     }
 
     companion object {
