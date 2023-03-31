@@ -115,17 +115,11 @@ class MainRepository @Inject constructor(@ApplicationContext private var appCont
 
     fun addItem(foodInfo: HashMap<String, String>, callback: () -> Unit) {
         auth.currentUser?.let {
-            db.collection(it.uid).document(hashItemKey(foodInfo)).set(foodInfo).addOnSuccessListener {
+            db.collection(it.uid).document(foodInfo[FoodConstants.NDB_NO]!!).set(foodInfo).addOnSuccessListener {
                 Toast.makeText(appContext, "Item Saved", Toast.LENGTH_SHORT).show()
                 callback.invoke()
             }
         }
-    }
-
-    private fun hashItemKey(foodInfo: HashMap<String, String>): String {
-        val key = foodInfo[FoodConstants.NDB_NO]!!.toInt()
-        val quantity = foodInfo[FoodConstants.QUANTITY]!!.toDouble()
-        return (key * 100 + quantity * 5).toString()
     }
 
     fun didItemExist(ndbNumber: String, callback: () -> Unit) {

@@ -56,8 +56,8 @@ class ApiRepository@Inject constructor(@ApplicationContext private var appContex
         if (foodJsonObject == null) {
             return null
         }
+        resultMap[FoodConstants.NDB_NO] = hashItemKey(foodJsonObject)
         resultMap[FoodConstants.QUANTITY] = formatJsonElementToString(foodJsonObject.get(FoodConstants.QUANTITY))
-        resultMap[FoodConstants.NDB_NO] = formatJsonElementToString(foodJsonObject.get(FoodConstants.NDB_NO))
         resultMap[FoodConstants.NAME] = formatJsonElementToString(foodJsonObject.get(FoodConstants.NAME))
         resultMap[FoodConstants.CALORIES] = formatJsonElementToString(foodJsonObject.get(FoodConstants.CALORIES))
         resultMap[FoodConstants.TOTAL_FAT] = formatJsonElementToString(foodJsonObject.get(FoodConstants.TOTAL_FAT))
@@ -72,6 +72,12 @@ class ApiRepository@Inject constructor(@ApplicationContext private var appContex
 
     fun pushToast(message: String) {
         Toast.makeText(appContext, message, Toast.LENGTH_SHORT).show()
+    }
+
+    private fun hashItemKey(foodInfo: JsonObject): String {
+        val key = foodInfo.get(FoodConstants.NDB_NO).toString().toInt()
+        val quantity = foodInfo.get(FoodConstants.QUANTITY).toString().toDouble()
+        return (key * 100 + quantity * 5).toString()
     }
 
 }
