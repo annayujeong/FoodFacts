@@ -58,11 +58,10 @@ class FoodItemListFragment : Fragment(), NavigateToFoodDescriptionListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         val foodViewModel:FoodViewModel by activityViewModels()
         foodViewModel.initialize()
+
         foodViewModel.getFavouriteItems() {
             setUpRecyclerView(it)
         }
-
-
     }
 
     companion object {

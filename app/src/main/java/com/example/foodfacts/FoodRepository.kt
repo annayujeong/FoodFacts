@@ -33,6 +33,8 @@ class FoodRepository @Inject constructor(@ApplicationContext private var appCont
 
         val scope = CoroutineScope(Dispatchers.Main)
 
+        foodList.clear()
+
         scope.launch {
             db.collection(uid.toString())
                 .get()
@@ -58,22 +60,24 @@ class FoodRepository @Inject constructor(@ApplicationContext private var appCont
 
     }
 
-
-
-
-    fun getFavouriteItems() {
-        val foodRef = db.collection("")
-
+    fun deleteFoodItem(food_id: String) {
+        db = Firebase.firestore
+        auth = Firebase.auth
         val auth = FirebaseAuth.getInstance()
         val uid = auth.currentUser?.uid
 
+        val scope = CoroutineScope(Dispatchers.Main)
+
+        scope.launch {
+            db.collection(uid.toString())
+                .document(food_id)
+                .delete()
+                .addOnSuccessListener {
+                    Log.d("test", "delete success")
+                }
+        }
     }
-
-//    fun addToFavouriteItems(){
-//        if(currentUser != null){
-//            // TODO:
-//        }
-//    }
-
-
 }
+
+
+

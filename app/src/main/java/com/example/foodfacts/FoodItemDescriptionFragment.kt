@@ -5,8 +5,12 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.fragment.findNavController
+import com.bumptech.glide.Glide
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -48,13 +52,29 @@ class FoodItemDescriptionFragment : Fragment() {
         val foodName = view.findViewById<TextView>(R.id.textView_FoodItemDescription_name)
         val foodProtein = view.findViewById<TextView>(R.id.textView_FoodItemDescription_protein)
         val foodFat = view.findViewById<TextView>(R.id.textView_FoodItemDescription_total_fat)
+        val foodImage = view.findViewById<ImageView>(R.id.imageView_FoodItemDescription)
+        val foodCalories = view.findViewById<TextView>(R.id.textView_FoodItemDescription_calories)
+        val foodServingQty = view.findViewById<TextView>(R.id.textView_FoodItemDescription_serving_qty)
+
+        val deleteButton = view.findViewById<Button>(R.id.button_FoodItemDescription_deleteFood)
 
         val individualFoodItem = foodViewModel.getFoodListAlrInit().filter {x -> x.nbdNo == currQuest}
 
         for (food in individualFoodItem) {
             foodName.text = food.foodName
+            foodCalories.text = food.calories
             foodProtein.text = food.protein
             foodFat.text = food.totalFat
+            foodServingQty.text = food.servingQty
+
+            Glide.with(foodImage.context)
+                .load(food.photoUrl)
+                .into(foodImage)
+        }
+
+        deleteButton.setOnClickListener {
+            foodViewModel.deleteFoodItem(currQuest as String)
+            findNavController().navigate(R.id.action_FoodItemDescriptionFragment_to_FoodItemListFragment)
         }
     }
 

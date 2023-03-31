@@ -63,5 +63,9 @@
         android:id="@+id/FoodItemDescriptionFragment"
         android:name="com.example.foodfacts.FoodItemDescriptionFragment"
         android:label="fragment_food_item_description"
-        tools:layout="@layout/fragment_food_item_description" />
+        tools:layout="@layout/fragment_food_item_description" >
+        <action
+            android:id="@+id/action_FoodItemDescriptionFragment_to_FoodItemListFragment"
+            app:destination="@id/FoodItemListFragment" />
+    </fragment>
 </navigation>

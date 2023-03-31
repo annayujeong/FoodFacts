@@ -50,6 +50,10 @@ class FoodViewModel @Inject constructor(private val mainRepository: MainReposito
         return foodRepository.foodList
     }
 
+    fun deleteFoodItem(food_id: String) {
+        foodRepository.deleteFoodItem(food_id)
+    }
+
 
     fun addToFavouriteItems(foodInfo: HashMap<String, String>) {
         mainRepository.addItem(foodInfo)

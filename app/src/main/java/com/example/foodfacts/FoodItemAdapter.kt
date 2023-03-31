@@ -4,8 +4,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 
 
 class FoodItemAdapter(private val mList: List<FoodItem>, private val listener: NavigateToFoodDescriptionListener) :
@@ -16,6 +18,7 @@ class FoodItemAdapter(private val mList: List<FoodItem>, private val listener: N
         //val textView: TextView = itemView.findViewById(R.id.textView)
         val foodCardItemName: TextView = itemView.findViewById(R.id.textView_foodFactCard)
         val button: Button = itemView.findViewById(R.id.button_FoodItem_toDescription)
+        val foodImage: ImageView = itemView.findViewById(R.id.imageView_foodItemCard)
     }
 
     // create new views
@@ -35,6 +38,10 @@ class FoodItemAdapter(private val mList: List<FoodItem>, private val listener: N
         //holder.textView.text = mList[position]
 
         holder.foodCardItemName.text = mList[position].foodName
+
+        Glide.with(holder.foodImage.context)
+            .load(mList[position].photoUrl)
+            .into(holder.foodImage)
 
         holder.button.setOnClickListener {
             listener.onNavigateToFoodDescription(mList[position])
