@@ -63,8 +63,8 @@ class FoodItemDescriptionFragment : Fragment() {
         for (food in individualFoodItem) {
             foodName.text = food.foodName
             foodCalories.text = food.calories
-            foodProtein.text = food.protein
-            foodFat.text = food.totalFat
+            foodProtein.text = getString(R.string.food_protein, food.protein)
+            foodFat.text = getString(R.string.food_fat, food.totalFat)
             foodServingQty.text = food.servingQty
 
             Glide.with(foodImage.context)

@@ -5,7 +5,9 @@
     <string name="food_name_label">Food Name</string>
     <string name="food_calories_label">Calories</string>
     <string name="food_protein_label">Protein</string>
+    <string name="food_protein">%1$s g</string>
     <string name="food_fat_label">Fat</string>
+    <string name="food_fat">%1$s g</string>
     <string name="food_serving_quantity_label">Serving Quantity</string>
     <string name="delete_from_fav">Delete Food Item</string>
     <string name="foodFacts">FoodFacts</string>
