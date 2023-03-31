@@ -46,8 +46,8 @@
             android:id="@+id/action_homeFragment_to_resultFragment"
             app:destination="@id/resultFragment" />
         <action
-            android:id="@+id/action_homeFragment_to_favouriteFoodsFragment"
-            app:destination="@id/favouriteFoodsFragment" />
+            android:id="@+id/action_homeFragment_to_foodItemListFragment"
+            app:destination="@id/FoodItemListFragment" />
     </fragment>
 
     <fragment
@@ -55,4 +55,21 @@
         android:name="com.example.foodfacts.FavouriteFoodsFragment"
         android:label="fragment_favourite_foods"
         tools:layout="@layout/fragment_favourite_foods" />
+    <fragment
+        android:id="@+id/FoodItemListFragment"
+        android:name="com.example.foodfacts.FoodItemListFragment"
+        android:label="fragment_food_item_list">
+        <action
+            android:id="@+id/action_foodItemListFragment_to_foodItemDescriptionFragment"
+            app:destination="@id/FoodItemDescriptionFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/FoodItemDescriptionFragment"
+        android:name="com.example.foodfacts.FoodItemDescriptionFragment"
+        android:label="fragment_food_item_description"
+        tools:layout="@layout/fragment_food_item_description" >
+        <action
+            android:id="@+id/action_FoodItemDescriptionFragment_to_FoodItemListFragment"
+            app:destination="@id/FoodItemListFragment" />
+    </fragment>
 </navigation>

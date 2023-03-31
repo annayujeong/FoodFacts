@@ -15,8 +15,8 @@ import javax.inject.Inject
 // handling user information and account?
 
 @HiltViewModel
-class FoodViewModel @Inject constructor(private val mainRepository: MainRepository): ViewModel() {
-//class FoodViewModel: ViewModel(){
+class FoodViewModel @Inject constructor(private val mainRepository: MainRepository, private val foodRepository: FoodRepository): ViewModel() {
+
     // TODO: sign in and account creation here?
 
     lateinit var db: FirebaseFirestore
@@ -42,11 +42,18 @@ class FoodViewModel @Inject constructor(private val mainRepository: MainReposito
         // TODO:
     }
 
-    fun getFavouriteItems() {
-        if (currentUser != null) {
-            // TODO:
-        }
+    fun getFavouriteItems(callback: (foodList: List<FoodItem>) -> Unit){
+        foodRepository.getFoodList(callback)
     }
+
+    fun getFoodListAlrInit(): List<FoodItem> {
+        return foodRepository.foodList
+    }
+
+    fun deleteFoodItem(food_id: String) {
+        foodRepository.deleteFoodItem(food_id)
+    }
+
 
     fun addToFavouriteItems(foodInfo: HashMap<String, String>) {
         mainRepository.addItem(foodInfo)
@@ -55,4 +62,5 @@ class FoodViewModel @Inject constructor(private val mainRepository: MainReposito
     fun checkItemExist(ndbNumber: String, callback: () -> Unit) {
         mainRepository.didItemExist(ndbNumber, callback)
     }
+
 }

@@ -2,5 +2,11 @@
     <string name="app_name">FoodFacts</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="food_name_label">Food Name</string>
+    <string name="food_calories_label">Calories</string>
+    <string name="food_protein_label">Protein</string>
+    <string name="food_fat_label">Fat</string>
+    <string name="food_serving_quantity_label">Serving Quantity</string>
+    <string name="delete_from_fav">Delete Food Item</string>
     <string name="foodFacts">FoodFacts</string>
 </resources>

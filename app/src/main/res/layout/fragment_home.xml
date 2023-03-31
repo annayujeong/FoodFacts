@@ -3,7 +3,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     tools:context=".HomeFragment">
 
@@ -27,11 +26,15 @@
         android:layout_weight="0"
         android:text="Button" />
 
+    <Button
+        android:id="@+id/button_listItem_GoToList"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="go to list" />
+
     <SearchView
         android:id="@+id/searchView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:showAsAction="always"
-        />
+        android:layout_height="match_parent" />
 
 </LinearLayout>

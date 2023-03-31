@@ -33,7 +33,13 @@ class HomeFragment : Fragment() {
         val apiViewModel: ApiViewModel by activityViewModels()
 
         val button = view.findViewById<Button>(R.id.button_home)
+        val foodButton = view.findViewById<Button>(R.id.button_listItem_GoToList)
+
         val text = view.findViewById<TextView>(R.id.textView_food_name_home).text.toString()
+
+        foodButton.setOnClickListener{
+            findNavController().navigate(R.id.action_homeFragment_to_foodItemListFragment)
+        }
 
         val search = view.findViewById<SearchView>(R.id.searchView)
         search.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
