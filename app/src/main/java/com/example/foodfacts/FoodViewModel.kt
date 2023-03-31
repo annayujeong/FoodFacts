@@ -55,8 +55,8 @@ class FoodViewModel @Inject constructor(private val mainRepository: MainReposito
     }
 
 
-    fun addToFavouriteItems(foodInfo: HashMap<String, String>) {
-        mainRepository.addItem(foodInfo)
+    fun addToFavouriteItems(foodInfo: HashMap<String, String>, callback: () -> Unit) {
+        mainRepository.addItem(foodInfo, callback)
     }
 
     fun checkItemExist(ndbNumber: String, callback: () -> Unit) {
