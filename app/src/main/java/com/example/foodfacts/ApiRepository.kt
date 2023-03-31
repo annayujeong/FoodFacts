@@ -1,6 +1,7 @@
 package com.example.foodfacts
 
 import android.content.Context
+import android.widget.Toast
 import com.google.gson.JsonElement
 import com.google.gson.JsonObject
 import dagger.hilt.android.qualifiers.ApplicationContext
@@ -19,7 +20,7 @@ import kotlin.collections.HashMap
 
 class ApiRepository@Inject constructor(@ApplicationContext private var appContext: Context){
 
-    suspend fun getFoodApiResult(itemName: String): HashMap<String, String> {
+    suspend fun getFoodApiResult(itemName: String): HashMap<String, String>? {
         val scope = CoroutineScope(Dispatchers.Main)
         val request = scope.async {
             val client = HttpClient {
@@ -40,14 +41,21 @@ class ApiRepository@Inject constructor(@ApplicationContext private var appContex
         }
         val getResultList = scope.async {
             val response = request.await()
-            val foodJsonObject = response.body<JsonObject>().get(FoodConstants.FOODS).asJsonArray.get(0).asJsonObject
+            val foodJsonObject: JsonObject? = try {
+                response.body<JsonObject>().get(FoodConstants.FOODS).asJsonArray.get(0).asJsonObject
+            } catch (e: NullPointerException) {
+                null
+            }
             return@async putJsonObjectInHashMap(foodJsonObject)
         }
         return getResultList.await()
     }
 
-    private fun putJsonObjectInHashMap(foodJsonObject: JsonObject): HashMap<String, String> {
+    private fun putJsonObjectInHashMap(foodJsonObject: JsonObject?): HashMap<String, String>? {
         val resultMap = hashMapOf<String, String>()
+        if (foodJsonObject == null) {
+            return null
+        }
         resultMap[FoodConstants.QUANTITY] = formatJsonElementToString(foodJsonObject.get(FoodConstants.QUANTITY))
         resultMap[FoodConstants.NDB_NO] = formatJsonElementToString(foodJsonObject.get(FoodConstants.NDB_NO))
         resultMap[FoodConstants.NAME] = formatJsonElementToString(foodJsonObject.get(FoodConstants.NAME))
@@ -60,6 +68,10 @@ class ApiRepository@Inject constructor(@ApplicationContext private var appContex
 
     private fun formatJsonElementToString(jsonElement: JsonElement): String {
         return jsonElement.toString().replace("\"", "")
+    }
+
+    fun pushToast(message: String) {
+        Toast.makeText(appContext, message, Toast.LENGTH_SHORT).show()
     }
 
 }
