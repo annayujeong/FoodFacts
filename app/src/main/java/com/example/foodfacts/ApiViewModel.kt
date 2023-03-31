@@ -22,7 +22,7 @@ interface GenericDataListener {
 class ApiViewModel @Inject constructor(private val apiRepository: ApiRepository): ViewModel() {
     var genericLiveDataObject: MutableLiveData<HashMap<String, String>> = MutableLiveData<HashMap<String, String>>()
 
-    fun updateDataWithLiveData(itemName: String, navController: NavController) {
+    fun getDataAndNavigateToResult(itemName: String, navController: NavController) {
         val scope = CoroutineScope(Dispatchers.Main)
         scope.launch {
             handleReturnedData(apiRepository.getFoodApiResult(itemName))
