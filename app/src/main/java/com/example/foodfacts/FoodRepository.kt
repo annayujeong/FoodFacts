@@ -18,10 +18,7 @@ import javax.inject.Inject
 class FoodRepository @Inject constructor(@ApplicationContext private var appContext: Context) {
 
     lateinit var db: FirebaseFirestore
-
     private lateinit var auth: FirebaseAuth
-
-    //lateinit var currentUser: FirebaseUser
 
     val foodList = ArrayList<FoodItem>()
 
@@ -41,13 +38,13 @@ class FoodRepository @Inject constructor(@ApplicationContext private var appCont
                 .addOnSuccessListener { result ->
                     for (document in result) {
                         val newFoodItem = FoodItem(
-                            nbdNo = document.data["ndb_no"].toString(),
-                            foodName = document.data["food_name"].toString(),
-                            calories = document.data["nf_calories"].toString(),
-                            protein = document.data["nf_protein"].toString(),
-                            totalFat = document.data["nf_total_fat"].toString(),
-                            photoUrl = document.data["photo"].toString(),
-                            servingQty = document.data["serving_qty"].toString()
+                            nbdNo = document.data[FoodConstants.NDB_NO].toString(),
+                            foodName = document.data[FoodConstants.NAME].toString(),
+                            calories = document.data[FoodConstants.CALORIES].toString(),
+                            protein = document.data[FoodConstants.PROTEIN].toString(),
+                            totalFat = document.data[FoodConstants.TOTAL_FAT].toString(),
+                            photoUrl = document.data[FoodConstants.IMAGE_URL].toString(),
+                            servingQty = document.data[FoodConstants.QUANTITY].toString()
                         )
                         foodList.add(newFoodItem)
                     }
@@ -77,7 +74,5 @@ class FoodRepository @Inject constructor(@ApplicationContext private var appCont
                 }
         }
     }
+
 }
-
-
-

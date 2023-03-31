@@ -1,7 +1,6 @@
 package com.example.foodfacts
 
 import android.content.Context
-import android.widget.Toast
 import com.google.gson.JsonElement
 import com.google.gson.JsonObject
 import dagger.hilt.android.qualifiers.ApplicationContext
@@ -57,15 +56,6 @@ class ApiRepository@Inject constructor(@ApplicationContext private var appContex
         resultMap[FoodConstants.PROTEIN] = formatJsonElementToString(foodJsonObject.get(FoodConstants.PROTEIN))
         resultMap[FoodConstants.IMAGE_URL] = formatJsonElementToString(foodJsonObject.get(FoodConstants.IMAGE_URL).asJsonObject.get(FoodConstants.HIGH_RES))
         return resultMap
-    }
-
-    fun didSingleItemEntered(returnedData: HashMap<String, String>): Boolean {
-        val quantity = returnedData[FoodConstants.QUANTITY]!!.toInt()
-        return quantity == 1
-    }
-
-    fun pushToastIfNotSingleItem() {
-        Toast.makeText(appContext, "Please enter single item quantity", Toast.LENGTH_SHORT).show()
     }
 
     private fun formatJsonElementToString(jsonElement: JsonElement): String {
