@@ -16,6 +16,7 @@ object FoodConstants {
     const val PROTEIN = "nf_protein"
     const val IMAGE_URL = "photo"
     const val THUMBNAIL = "thumb"
+    const val HIGH_RES = "highres"
     const val NDB_NO = "ndb_no"
     const val QUANTITY = "serving_qty"
 }

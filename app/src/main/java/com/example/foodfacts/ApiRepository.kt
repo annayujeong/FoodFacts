@@ -55,7 +55,7 @@ class ApiRepository@Inject constructor(@ApplicationContext private var appContex
         resultMap[FoodConstants.CALORIES] = formatJsonElementToString(foodJsonObject.get(FoodConstants.CALORIES))
         resultMap[FoodConstants.TOTAL_FAT] = formatJsonElementToString(foodJsonObject.get(FoodConstants.TOTAL_FAT))
         resultMap[FoodConstants.PROTEIN] = formatJsonElementToString(foodJsonObject.get(FoodConstants.PROTEIN))
-        resultMap[FoodConstants.IMAGE_URL] = formatJsonElementToString(foodJsonObject.get(FoodConstants.IMAGE_URL).asJsonObject.get(FoodConstants.THUMBNAIL))
+        resultMap[FoodConstants.IMAGE_URL] = formatJsonElementToString(foodJsonObject.get(FoodConstants.IMAGE_URL).asJsonObject.get(FoodConstants.HIGH_RES))
         return resultMap
     }
 
