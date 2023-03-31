@@ -38,25 +38,29 @@ class ResultFragment : Fragment() {
         apiViewModel.genericLiveDataObject.observe(viewLifecycleOwner, dataObserver)
 
         binding.buttonSaveResult.setOnClickListener {
-            foodViewModel.addToFavouriteItems(returnedData)
+            foodViewModel.addToFavouriteItems(returnedData) {
+                disableSaveButton()
+            }
         }
     }
 
-    private fun disableButtonIfItemExist() {
+    private fun disableSaveButton() {
         binding.buttonSaveResult.isEnabled = false
         binding.buttonSaveResult.isClickable = false
         binding.buttonSaveResult.setBackgroundColor(Color.GRAY)
+        binding.buttonSaveResult.setTextColor(Color.WHITE)
+        binding.buttonSaveResult.text = "Saved"
     }
 
     private fun updateViewsOnNewData(foodViewModel: FoodViewModel, returnedData: HashMap<String, String>) {
         foodViewModel.checkItemExist(returnedData[FoodConstants.NDB_NO]!!) {
-            disableButtonIfItemExist()
+            disableSaveButton()
         }
         Glide.with(binding.imageViewResult).load(returnedData[FoodConstants.IMAGE_URL]).into(binding.imageViewResult)
         binding.textViewNameResult.text = returnedData[FoodConstants.NAME]
-        binding.textViewFatResult.text = returnedData[FoodConstants.TOTAL_FAT]
-        binding.textViewCaloriesResult.text = returnedData[FoodConstants.CALORIES]
-        binding.textViewProteinResult.text = returnedData[FoodConstants.PROTEIN]
+        binding.textViewFatResultValue.text = returnedData[FoodConstants.TOTAL_FAT]
+        binding.textViewCaloriesResultValue.text = returnedData[FoodConstants.CALORIES]
+        binding.textViewProteinResultValue.text = returnedData[FoodConstants.PROTEIN]
     }
 
     override fun onDestroyView() {
