@@ -1,52 +1,59 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context=".AuthenticationFragment">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <Space
+    <data>
+
+    </data>
+
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="200sp" />
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:context=".AuthenticationFragment">
 
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:text="@string/foodFacts"
-        android:textSize="60sp" />
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="200sp" />
 
-    <EditText
-        android:id="@+id/editTextTextEmailAddress"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:ems="10"
-        android:hint="Email"
-        android:inputType="textEmailAddress" />
+        <TextView
+            android:id="@+id/textView_authFragment_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="@string/foodFacts"
+            android:textSize="60sp" />
 
-    <EditText
-        android:id="@+id/editTextTextPassword"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:ems="10"
-        android:hint="Password"
-        android:inputType="textPassword" />
+        <EditText
+            android:id="@+id/editText_authFragment_email"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:ems="10"
+            android:hint="@string/email_hint"
+            android:inputType="textEmailAddress" />
 
-    <Button
-        android:id="@+id/loginButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:text="Log In" />
+        <EditText
+            android:id="@+id/editText_authFragment_password"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:ems="10"
+            android:hint="@string/password_hint"
+            android:inputType="textPassword" />
 
-    <Button
-        android:id="@+id/createAccountButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:text="Create Account" />
-</LinearLayout>
+        <Button
+            android:id="@+id/button_authFragment_login"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="@string/login_label" />
+
+        <Button
+            android:id="@+id/button_authFragment_createAccount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="@string/create_account_label" />
+    </LinearLayout>
+</layout>

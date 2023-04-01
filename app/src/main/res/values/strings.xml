@@ -11,4 +11,10 @@
     <string name="food_serving_quantity_label">Serving Quantity</string>
     <string name="delete_from_fav">Delete Food Item</string>
     <string name="foodFacts">FoodFacts</string>
+    <string name="email_hint">Email</string>
+    <string name="create_account_label">Create Account</string>
+    <string name="password_hint">Password</string>
+    <string name="login_label">Log In</string>
+    <string name="create_account_email_label">Email Address</string>
+    <string name="enter_password_label">Enter Password</string>
 </resources>

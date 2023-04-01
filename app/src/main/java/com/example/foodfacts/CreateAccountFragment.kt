@@ -11,6 +11,7 @@ import android.widget.EditText
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
+import com.example.foodfacts.databinding.FragmentCreateAccountBinding
 import com.google.firebase.auth.FirebaseUser
 
 // TODO: Rename parameter arguments, choose names that match
@@ -28,6 +29,9 @@ class CreateAccountFragment : Fragment(), AuthenticationInterface {
     private var param1: String? = null
     private var param2: String? = null
 
+    private var _binding: FragmentCreateAccountBinding? = null
+    private val binding get() = _binding!!
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -41,12 +45,14 @@ class CreateAccountFragment : Fragment(), AuthenticationInterface {
 
         val authViewModel: AuthViewModel by activityViewModels()
 
-        val dataObserver = Observer<FirebaseUser>{}
+        //val button = view.findViewById<Button>(R.id.button_createFragment)
+        val button = binding.buttonCreateAccountFragmentCreate
 
-        val button = view.findViewById<Button>(R.id.button_createFragment)
+        //val email = view.findViewById<EditText>(R.id.editTextEmailAddress_create)
+        val email = binding.editTextCreateAccountFragmentEmail
 
-        val email = view.findViewById<EditText>(R.id.editTextEmailAddress_create)
-        val password = view.findViewById<EditText>(R.id.editTextPassword_create)
+        //val password = view.findViewById<EditText>(R.id.editTextPassword_create)
+        val password = binding.editTextCreateAccountFragmentPassword
 
         button.setOnClickListener{
             authViewModel.createAccount(email.text.toString(), password.text.toString(), this)
@@ -60,8 +66,11 @@ class CreateAccountFragment : Fragment(), AuthenticationInterface {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
+        _binding = FragmentCreateAccountBinding.inflate(inflater, container, false)
+        return binding.root
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_create_account, container, false)
+        //return inflater.inflate(R.layout.fragment_create_account, container, false)
     }
 
     companion object {
@@ -86,5 +95,10 @@ class CreateAccountFragment : Fragment(), AuthenticationInterface {
 
     override fun goToHomeScreen() {
         findNavController().navigate(R.id.action_createAccountFragment_to_homeFragment)
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }

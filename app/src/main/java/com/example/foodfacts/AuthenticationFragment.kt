@@ -10,6 +10,9 @@ import android.widget.Button
 import android.widget.EditText
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
+import com.example.foodfacts.databinding.FragmentCreateAccountBinding
+import com.example.foodfacts.databinding.FragmentSplashScreenBinding
+import com.google.android.material.snackbar.Snackbar
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -26,6 +29,9 @@ class AuthenticationFragment : Fragment(), AuthenticationInterface {
     private var param1: String? = null
     private var param2: String? = null
 
+    private var _binding: FragmentSplashScreenBinding? = null
+    private val binding get() = _binding!!
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -38,25 +44,33 @@ class AuthenticationFragment : Fragment(), AuthenticationInterface {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
+        _binding = FragmentSplashScreenBinding.inflate(inflater, container, false)
+        return binding.root
+
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_splash_screen, container, false)
+        //return inflater.inflate(R.layout.fragment_splash_screen, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val loginButton = view.findViewById<Button>(R.id.loginButton)
+        //val loginButton = view.findViewById<Button>(R.id.loginButton)
+        val loginButton = binding.buttonAuthFragmentLogin
 
-        val createAccountButton = view.findViewById<Button>(R.id.createAccountButton)
+        //val createAccountButton = view.findViewById<Button>(R.id.createAccountButton)
+        val createAccountButton = binding.buttonAuthFragmentCreateAccount
 
-        val email = view.findViewById<EditText>(R.id.editTextTextEmailAddress)
+        //val email = view.findViewById<EditText>(R.id.editTextTextEmailAddress)
+        val email = binding.editTextAuthFragmentEmail
+
         val authViewModel: AuthViewModel by activityViewModels()
-        val password = view.findViewById<EditText>(R.id.editTextTextPassword)
+
+        //val password = view.findViewById<EditText>(R.id.editTextTextPassword)
+        val password = binding.editTextAuthFragmentPassword
 
         loginButton.setOnClickListener(){
-
             authViewModel.signIn(email.text.toString(), password.text.toString(), this)
-
 //            if(authViewModel.currentUser() != null){
 //                findNavController().navigate(R.id.action_splashScreenFragment_to_homeFragment)
 //            }
@@ -73,6 +87,11 @@ class AuthenticationFragment : Fragment(), AuthenticationInterface {
 //                findNavController().navigate(R.id.action_splashScreenFragment_to_homeFragment)
 //            }
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 
     companion object {
@@ -101,5 +120,12 @@ class AuthenticationFragment : Fragment(), AuthenticationInterface {
 
     override fun goToCreateAccount(){
         findNavController().navigate(R.id.action_splashScreenFragment_to_createAccountFragment)
+    }
+
+    override fun displayToastMessage(message : String) {
+        this.view?.let { Snackbar.make(it, message, Snackbar.LENGTH_LONG)
+            .setAction("Dismiss"){
+            }
+            .show() }
     }
 }
