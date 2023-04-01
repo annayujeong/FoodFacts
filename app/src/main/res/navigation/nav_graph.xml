@@ -51,11 +51,6 @@
     </fragment>
 
     <fragment
-        android:id="@+id/favouriteFoodsFragment"
-        android:name="com.example.foodfacts.FavouriteFoodsFragment"
-        android:label="fragment_favourite_foods"
-        tools:layout="@layout/fragment_favourite_foods" />
-    <fragment
         android:id="@+id/FoodItemListFragment"
         android:name="com.example.foodfacts.FoodItemListFragment"
         android:label="fragment_food_item_list">

@@ -17,4 +17,7 @@
     <string name="login_label">Log In</string>
     <string name="create_account_email_label">Email Address</string>
     <string name="enter_password_label">Enter Password</string>
+    <string name="search_button_label">Search</string>
+    <string name="favourites_button_label">Favourites</string>
+    <string name="search_food_hint">Search for a food...</string>
 </resources>
