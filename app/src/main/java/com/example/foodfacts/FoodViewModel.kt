@@ -17,30 +17,10 @@ import javax.inject.Inject
 @HiltViewModel
 class FoodViewModel @Inject constructor(private val mainRepository: MainRepository, private val foodRepository: FoodRepository): ViewModel() {
 
-    // TODO: sign in and account creation here?
-
-    lateinit var db: FirebaseFirestore
-
-    private lateinit var auth: FirebaseAuth
-
-    private var currentUser: FirebaseUser? = null
-
-    fun getRandom() {
-        Log.d("Testing", mainRepository.singletonTest.toString())
-    }
-
-    fun initialize() {
-        db = Firebase.firestore
-        auth = Firebase.auth
-    }
-
-    fun createAccount() {
-
-    }
-
-    fun signIn() {
-        // TODO:
-    }
+//    fun initialize() {
+//        db = Firebase.firestore
+//        auth = Firebase.auth
+//    }
 
     fun getFavouriteItems(callback: (foodList: List<FoodItem>) -> Unit){
         foodRepository.getFoodList(callback)

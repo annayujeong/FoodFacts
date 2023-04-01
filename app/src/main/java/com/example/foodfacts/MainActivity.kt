@@ -4,25 +4,32 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import androidx.activity.viewModels
 import dagger.hilt.android.AndroidEntryPoint
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.appcompat.widget.Toolbar
+import com.example.foodfacts.databinding.ActivityMainBinding
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
     private lateinit var navController: NavController
+    private lateinit var binding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        //setContentView(R.layout.activity_main)
+
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.fragmentContainerView_main) as NavHostFragment
         navController = navHostFragment.navController
 
-        val toolbar:Toolbar = findViewById(R.id.materialToolbar)
+        //val toolbar:Toolbar = findViewById(R.id.materialToolbar)
+        val toolbar: Toolbar = binding.materialToolbar
         setSupportActionBar(toolbar)
 
         val appBarConfiguration = AppBarConfiguration(navController.graph)
@@ -30,6 +37,9 @@ class MainActivity : AppCompatActivity() {
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.hide()
+
+        val authViewModel:AuthViewModel by viewModels()
+        authViewModel.initializeRepository()
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {

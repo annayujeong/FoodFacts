@@ -44,33 +44,34 @@ class AuthenticationFragment : Fragment(), AuthenticationInterface {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
         _binding = FragmentSplashScreenBinding.inflate(inflater, container, false)
         return binding.root
-
-        // Inflate the layout for this fragment
-        //return inflater.inflate(R.layout.fragment_splash_screen, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        //val loginButton = view.findViewById<Button>(R.id.loginButton)
         val loginButton = binding.buttonAuthFragmentLogin
 
-        //val createAccountButton = view.findViewById<Button>(R.id.createAccountButton)
         val createAccountButton = binding.buttonAuthFragmentCreateAccount
 
-        //val email = view.findViewById<EditText>(R.id.editTextTextEmailAddress)
         val email = binding.editTextAuthFragmentEmail
 
         val authViewModel: AuthViewModel by activityViewModels()
 
-        //val password = view.findViewById<EditText>(R.id.editTextTextPassword)
         val password = binding.editTextAuthFragmentPassword
 
         loginButton.setOnClickListener(){
-            authViewModel.signIn(email.text.toString(), password.text.toString(), this)
+
+            if(email.text.isBlank()){
+                displayToastMessage("Email cannot be empty!")
+            } else if (password.text.isBlank()){
+                displayToastMessage("Password cannot be empty!")
+            } else {
+                authViewModel.signIn(email.text.toString(), password.text.toString(), this)
+            }
+
+//            authViewModel.signIn(email.text.toString(), password.text.toString(), this)
 //            if(authViewModel.currentUser() != null){
 //                findNavController().navigate(R.id.action_splashScreenFragment_to_homeFragment)
 //            }

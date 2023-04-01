@@ -3,7 +3,11 @@ package com.example.foodfacts
 import android.content.Context
 import android.util.Log
 import android.widget.Toast
+import com.google.firebase.FirebaseNetworkException
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
+import com.google.firebase.auth.FirebaseAuthInvalidUserException
+import com.google.firebase.auth.FirebaseAuthWeakPasswordException
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
@@ -23,11 +27,7 @@ class MainRepository @Inject constructor(@ApplicationContext private var appCont
 
     private lateinit var auth: FirebaseAuth
 
-    //lateinit var currentUser: FirebaseUser
-
     private var currentUser: FirebaseUser? = null
-
-    var singletonTest = (0..10000000000000).random()
 
     fun initialize(){
         db = Firebase.firestore
@@ -35,7 +35,6 @@ class MainRepository @Inject constructor(@ApplicationContext private var appCont
     }
 
     fun createAccount(email : String, password : String, listener: AuthenticationInterface){
-        //TODO: handling empty email or password
         auth.createUserWithEmailAndPassword(email, password)
             .addOnCompleteListener() { task ->
                 if(task.isSuccessful) {
@@ -43,74 +42,43 @@ class MainRepository @Inject constructor(@ApplicationContext private var appCont
                     Log.d("Auth", "User account created")
                     currentUser = auth.currentUser
                     listener.goToHomeScreen()
-                    createCollection()
                 } else {
                     // sign in failed
                     Log.d("Auth", "User account creation failed", task.exception)
-                    Toast.makeText(appContext, "Authentication failed!",
-                        Toast.LENGTH_SHORT).show()
+//                    Toast.makeText(appContext, "Authentication failed!",
+//                        Toast.LENGTH_SHORT).show()
+                    if(task.exception is FirebaseAuthInvalidCredentialsException){
+                        listener.displayToastMessage("Incorrect email format!")
+                    } else if (task.exception is FirebaseAuthWeakPasswordException){
+                        listener.displayToastMessage("Password should be at least 6 characters")
+                    } else if (task.exception is FirebaseNetworkException) {
+                        listener.displayToastMessage("Error connecting to the database")
+                    }
                 }
             }
     }
 
-//    fun createAccount(email : String, password : String){
-//        auth.createUserWithEmailAndPassword(email, password)
-//            .addOnCompleteListener(this) { task ->
-//                if(task.isSuccessful) {
-//                    // sign in successful
-//                    Log.d("Auth", "User account created")
-//                    val user = auth.currentUser
-//                } else {
-//                    // sign in failed
-//                    Log.d("Auth", "User account creation failed", task.exception)
-//                    Toast.makeText(baseContext, "Authentication failed!",
-//                        Toast.LENGTH_SHORT).show()
-//                }
-//            }
-//    }
-
     fun signIn(email:String, password:String, listener: AuthenticationInterface){
-        //TODO: handling empty email or password
         auth.signInWithEmailAndPassword(email, password)
             .addOnCompleteListener(){task ->
                 if(task.isSuccessful){
                     Log.d("Auth", "Sign in with email successful")
                     currentUser = auth.currentUser
                     listener.goToHomeScreen()
-                    createCollection()
                 } else {
                     // sign in failed
-                    Log.d("Auth", email)
-                    Log.d("Auth", password)
-                    Log.d("Auth", "Sign in with email failed", task.exception)
-                    Toast.makeText(appContext, "Authentication failed",
-                    Toast.LENGTH_SHORT).show()
+                    Log.d("Auth", "User account creation failed", task.exception)
+//                    Toast.makeText(appContext, "Authentication failed!",
+//                        Toast.LENGTH_SHORT).show()
+                    if(task.exception is FirebaseAuthInvalidCredentialsException){
+                        listener.displayToastMessage("Incorrect email format!")
+                    } else if (task.exception is FirebaseAuthInvalidUserException){
+                        listener.displayToastMessage("This user doesn't appear to exist!")
+                    } else if (task.exception is FirebaseNetworkException) {
+                        listener.displayToastMessage("Error connecting to the database")
+                    }
                 }
             }
-    }
-
-//    fun signIn(email:String, password:String){
-//        auth.signInWithEmailAndPassword(email, password)
-//            .addOnCompleteListener(this) {task ->
-//                if(task.isSuccessful){
-//                    // sign in
-//                    Log.d("Auth", "Sign in with email successful")
-//                    val user = auth.currentUser
-//
-//                    // TODO: go to home fragment
-//                } else {
-//                    // sign in failed
-//                    Log.d("Auth", "Sign in with email failed")
-//                    Toast.makeText(baseContext, "Authentication failed!",
-//                        Toast.LENGTH_SHORT).show()
-//                }
-//            }
-//    }
-
-    // test method for creating a collection using the current user's uid
-    fun createCollection(){
-        val testData = mapOf<String, Int>("calories" to 500)
-        currentUser?.let { db.collection(it.uid).document("apple").set(testData) }
     }
 
     fun addItem(foodInfo: HashMap<String, String>, callback: () -> Unit) {
@@ -133,10 +101,6 @@ class MainRepository @Inject constructor(@ApplicationContext private var appCont
                 }
             }
         }
-    }
-
-    fun removeItem(){
-        // TODO: remove item from user collection
     }
 
     fun getUser(): FirebaseUser? {

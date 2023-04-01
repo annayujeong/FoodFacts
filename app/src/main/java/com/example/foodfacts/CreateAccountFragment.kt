@@ -12,6 +12,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.example.foodfacts.databinding.FragmentCreateAccountBinding
+import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseUser
 
 // TODO: Rename parameter arguments, choose names that match
@@ -45,17 +46,23 @@ class CreateAccountFragment : Fragment(), AuthenticationInterface {
 
         val authViewModel: AuthViewModel by activityViewModels()
 
-        //val button = view.findViewById<Button>(R.id.button_createFragment)
         val button = binding.buttonCreateAccountFragmentCreate
 
-        //val email = view.findViewById<EditText>(R.id.editTextEmailAddress_create)
         val email = binding.editTextCreateAccountFragmentEmail
 
-        //val password = view.findViewById<EditText>(R.id.editTextPassword_create)
         val password = binding.editTextCreateAccountFragmentPassword
 
         button.setOnClickListener{
-            authViewModel.createAccount(email.text.toString(), password.text.toString(), this)
+
+            if(email.text.isBlank()){
+                displayToastMessage("Email cannot be empty!")
+            } else if (password.text.isBlank()){
+                displayToastMessage("Password cannot be empty!")
+            } else {
+                authViewModel.createAccount(email.text.toString(), password.text.toString(), this)
+            }
+
+            //authViewModel.createAccount(email.text.toString(), password.text.toString(), this)
             Log.d("testing", email.text.toString())
             Log.d("testing", password.text.toString())
             Log.d("bruh", "create account button was clicked")
@@ -100,5 +107,12 @@ class CreateAccountFragment : Fragment(), AuthenticationInterface {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    override fun displayToastMessage(message : String) {
+        this.view?.let { Snackbar.make(it, message, Snackbar.LENGTH_LONG)
+            .setAction("Dismiss"){
+            }
+            .show() }
     }
 }

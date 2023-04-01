@@ -1,15 +1,16 @@
 package com.example.foodfacts
 
+import android.app.appsearch.AppSearchManager.SearchContext
 import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.Fragment
-import android.widget.Button
 import android.widget.SearchView
-import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.example.foodfacts.databinding.FragmentHomeBinding
+import com.google.android.material.internal.ViewUtils.hideKeyboard
+import com.google.android.material.snackbar.Snackbar
 
 class HomeFragment : Fragment() {
 
@@ -21,8 +22,6 @@ class HomeFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        //return inflater.inflate(R.layout.fragment_home, container, false)
-
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -33,24 +32,21 @@ class HomeFragment : Fragment() {
 
         val apiViewModel: ApiViewModel by activityViewModels()
 
-        //val button = view.findViewById<Button>(R.id.button_homeFragment_search)
         val button = binding.buttonHomeFragmentSearch
 
-        //val foodButton = view.findViewById<Button>(R.id.button_homeFragment_favourites)
         val foodButton = binding.buttonHomeFragmentFavourites
-
-        //val text = view.findViewById<TextView>(R.id.textView_food_name_home).text.toString()
 
         foodButton.setOnClickListener{
             findNavController().navigate(R.id.action_homeFragment_to_foodItemListFragment)
         }
 
-        //val search = view.findViewById<SearchView>(R.id.searchView_homeFragment)
         val search = binding.searchViewHomeFragment
 
         search.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String): Boolean {
-                apiViewModel.getDataAndNavigateToResult(search.query.toString(), findNavController())
+                search.clearFocus()
+                apiViewModel.getDataAndNavigateToResult(search.query.toString(),
+                    findNavController()){displayToastMessage("Please enter a food item")}
                 return false
             }
             override fun onQueryTextChange(newText: String?): Boolean {
@@ -59,7 +55,9 @@ class HomeFragment : Fragment() {
         })
 
         button.setOnClickListener {
-            apiViewModel.getDataAndNavigateToResult(search.query.toString(), findNavController())
+            apiViewModel.getDataAndNavigateToResult(search.query.toString(), findNavController()){
+                displayToastMessage("Please enter a food item")
+            }
         }
     }
 
@@ -68,4 +66,10 @@ class HomeFragment : Fragment() {
         _binding = null
     }
 
+    fun displayToastMessage(message : String) {
+        this.view?.let { Snackbar.make(it, message, Snackbar.LENGTH_LONG)
+            .setAction("Dismiss"){
+            }
+            .show() }
+    }
 }

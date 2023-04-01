@@ -15,33 +15,15 @@ import javax.inject.Inject
 @HiltViewModel
 class AuthViewModel @Inject constructor(private val mainRepository: MainRepository): ViewModel() {
 
-    // TODO: view model for handling authentication requests,
-    //  logging in and signing out, and creating accounts
-
-//    lateinit var db: FirebaseFirestore
-//
-//    private lateinit var auth: FirebaseAuth
-//
-//    private var currentUser: FirebaseUser? = null
-//
-//    var user: MutableLiveData<FirebaseUser> = MutableLiveData()
-
-//    fun initialize(){
-//        db = Firebase.firestore
-//        auth = Firebase.auth
-//    }
-
-    fun getRandom(){
-        Log.d("Testing", mainRepository.singletonTest.toString())
+    fun initializeRepository(){
+        mainRepository.initialize()
     }
 
     fun createAccount(email:String, password:String, listener: AuthenticationInterface){
-        mainRepository.initialize()
         mainRepository.createAccount(email, password, listener)
     }
 
     fun signIn(email:String, password:String, listener: AuthenticationInterface){
-        mainRepository.initialize()
         mainRepository.signIn(email, password, listener)
     }
 

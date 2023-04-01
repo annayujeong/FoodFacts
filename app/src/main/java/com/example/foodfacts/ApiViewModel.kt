@@ -14,7 +14,8 @@ import javax.inject.Inject
 class ApiViewModel @Inject constructor(private val apiRepository: ApiRepository): ViewModel() {
     var genericLiveDataObject: MutableLiveData<HashMap<String, String>> = MutableLiveData<HashMap<String, String>>()
 
-    fun getDataAndNavigateToResult(itemName: String, navController: NavController) {
+    fun getDataAndNavigateToResult(
+        itemName: String, navController: NavController, callback:() -> Unit) {
         val scope = CoroutineScope(Dispatchers.Main)
         scope.launch {
             val result = apiRepository.getFoodApiResult(itemName)
@@ -22,7 +23,8 @@ class ApiViewModel @Inject constructor(private val apiRepository: ApiRepository)
                 genericLiveDataObject.value = apiRepository.getFoodApiResult(itemName)
                 navController.navigate(R.id.action_homeFragment_to_resultFragment)
             } else {
-                apiRepository.pushToast("Please enter a food item")
+                callback.invoke()
+                //apiRepository.pushToast("Please enter a food item")
             }
         }
     }

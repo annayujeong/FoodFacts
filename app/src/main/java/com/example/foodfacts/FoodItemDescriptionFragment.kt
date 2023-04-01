@@ -11,6 +11,9 @@ import android.widget.TextView
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
+import com.example.foodfacts.databinding.FragmentFoodItemDescriptionBinding
+import com.example.foodfacts.databinding.FragmentFoodItemListBinding
+import com.google.android.material.snackbar.Snackbar
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -27,6 +30,9 @@ class FoodItemDescriptionFragment : Fragment() {
     private var param1: String? = null
     private var param2: String? = null
 
+    private var _binding: FragmentFoodItemDescriptionBinding? = null
+    private val binding get() = _binding!!
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -40,7 +46,10 @@ class FoodItemDescriptionFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_food_item_description, container, false)
+        //return inflater.inflate(R.layout.fragment_food_item_description, container, false)
+
+        _binding = FragmentFoodItemDescriptionBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -49,14 +58,21 @@ class FoodItemDescriptionFragment : Fragment() {
 
         val currQuest =  arguments?.get("key")
 
-        val foodName = view.findViewById<TextView>(R.id.textView_FoodItemDescription_name)
-        val foodProtein = view.findViewById<TextView>(R.id.textView_FoodItemDescription_protein)
-        val foodFat = view.findViewById<TextView>(R.id.textView_FoodItemDescription_total_fat)
-        val foodImage = view.findViewById<ImageView>(R.id.imageView_FoodItemDescription)
-        val foodCalories = view.findViewById<TextView>(R.id.textView_FoodItemDescription_calories)
-        val foodServingQty = view.findViewById<TextView>(R.id.textView_FoodItemDescription_serving_qty)
+        //val foodName = view.findViewById<TextView>(R.id.textView_FoodItemDescription_name)
+        val foodName = binding.textViewFoodItemDescriptionName
+        //val foodProtein = view.findViewById<TextView>(R.id.textView_FoodItemDescription_protein)
+        val foodProtein = binding.textViewFoodItemDescriptionProtein
+        //val foodFat = view.findViewById<TextView>(R.id.textView_FoodItemDescription_total_fat)
+        val foodFat = binding.textViewFoodItemDescriptionTotalFat
+        //val foodImage = view.findViewById<ImageView>(R.id.imageView_FoodItemDescription)
+        val foodImage = binding.imageViewFoodItemDescription
+        //val foodCalories = view.findViewById<TextView>(R.id.textView_FoodItemDescription_calories)
+        val foodCalories = binding.textViewFoodItemDescriptionCalories
+        //val foodServingQty = view.findViewById<TextView>(R.id.textView_FoodItemDescription_serving_qty)
+        val foodServingQty = binding.textViewFoodItemDescriptionServingQty
 
-        val deleteButton = view.findViewById<Button>(R.id.button_FoodItemDescription_deleteFood)
+        //val deleteButton = view.findViewById<Button>(R.id.button_FoodItemDescription_deleteFood)
+        val deleteButton = binding.buttonFoodItemDescriptionDeleteFood
 
         val individualFoodItem = foodViewModel.getFoodListAlrInit().filter {x -> x.nbdNo == currQuest}
 
@@ -74,6 +90,11 @@ class FoodItemDescriptionFragment : Fragment() {
 
         deleteButton.setOnClickListener {
             foodViewModel.deleteFoodItem(currQuest as String)
+
+            this.view?.let { it1 ->
+                Snackbar.make(it1, "Item deleted", Snackbar.LENGTH_LONG)
+                    .setAction("Dismiss"){}.show()
+            }
             findNavController().navigate(R.id.action_FoodItemDescriptionFragment_to_FoodItemListFragment)
         }
     }
@@ -96,5 +117,10 @@ class FoodItemDescriptionFragment : Fragment() {
                     putString(ARG_PARAM2, param2)
                 }
             }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }

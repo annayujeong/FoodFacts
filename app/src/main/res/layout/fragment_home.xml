@@ -16,19 +16,22 @@
         android:id="@+id/searchView_homeFragment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:iconifiedByDefault="false"
         android:queryHint="@string/search_food_hint" />
 
     <Button
         android:id="@+id/button_homeFragment_search"
-        android:layout_width="match_parent"
+        android:layout_width="150dp"
         android:layout_height="wrap_content"
+        android:layout_gravity="center"
         android:layout_weight="0"
         android:text="@string/search_button_label" />
 
     <Button
         android:id="@+id/button_homeFragment_favourites"
-        android:layout_width="match_parent"
+        android:layout_width="150dp"
         android:layout_height="wrap_content"
+        android:layout_gravity="center"
         android:text="@string/favourites_button_label" />
 
 </LinearLayout>
