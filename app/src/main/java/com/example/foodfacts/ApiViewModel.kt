@@ -12,6 +12,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class ApiViewModel @Inject constructor(private val apiRepository: ApiRepository): ViewModel() {
+    var cameraScannedData: MutableLiveData<String> = MutableLiveData<String>()
     var genericLiveDataObject: MutableLiveData<HashMap<String, String>> = MutableLiveData<HashMap<String, String>>()
 
     fun getDataAndNavigateToResult(

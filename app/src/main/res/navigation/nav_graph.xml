@@ -48,6 +48,9 @@
         <action
             android:id="@+id/action_homeFragment_to_foodItemListFragment"
             app:destination="@id/FoodItemListFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_appCameraFragment"
+            app:destination="@id/appCameraFragment" />
     </fragment>
 
     <fragment
@@ -66,5 +69,13 @@
         <action
             android:id="@+id/action_FoodItemDescriptionFragment_to_FoodItemListFragment"
             app:destination="@id/FoodItemListFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/appCameraFragment"
+        android:name="com.example.foodfacts.AppCameraFragment"
+        android:label="AppCameraFragment" >
+        <action
+            android:id="@+id/action_appCameraFragment_to_resultFragment"
+            app:destination="@id/resultFragment" />
     </fragment>
 </navigation>

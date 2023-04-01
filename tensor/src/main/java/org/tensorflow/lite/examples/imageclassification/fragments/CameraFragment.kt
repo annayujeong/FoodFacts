@@ -43,7 +43,7 @@ import org.tensorflow.lite.task.vision.classifier.Classifications
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 
-class CameraFragment : Fragment(), ImageClassifierHelper.ClassifierListener {
+open class CameraFragment : Fragment(), ImageClassifierHelper.ClassifierListener {
 
     companion object {
         private const val TAG = "Image Classifier"

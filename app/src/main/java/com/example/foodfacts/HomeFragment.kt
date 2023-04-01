@@ -1,15 +1,14 @@
 package com.example.foodfacts
 
-import android.app.appsearch.AppSearchManager.SearchContext
 import android.os.Bundle
 import android.view.*
+import android.widget.Button
 import androidx.fragment.app.Fragment
 import android.widget.SearchView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.example.foodfacts.databinding.FragmentHomeBinding
-import com.google.android.material.internal.ViewUtils.hideKeyboard
 import com.google.android.material.snackbar.Snackbar
 
 class HomeFragment : Fragment() {
@@ -58,6 +57,11 @@ class HomeFragment : Fragment() {
             apiViewModel.getDataAndNavigateToResult(search.query.toString(), findNavController()){
                 displayToastMessage("Please enter a food item")
             }
+        }
+
+        val cameraButton = view.findViewById<Button>(R.id.button_camera)
+        cameraButton.setOnClickListener {
+            findNavController().navigate(R.id.action_homeFragment_to_appCameraFragment)
         }
     }
 
