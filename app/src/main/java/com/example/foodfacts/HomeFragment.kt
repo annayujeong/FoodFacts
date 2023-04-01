@@ -7,9 +7,11 @@ import androidx.fragment.app.Fragment
 import android.widget.SearchView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.example.foodfacts.databinding.FragmentHomeBinding
 import com.google.android.material.snackbar.Snackbar
+import org.tensorflow.lite.examples.imageclassification.fragments.CameraFragment
 
 class HomeFragment : Fragment() {
 
@@ -58,11 +60,24 @@ class HomeFragment : Fragment() {
                 displayToastMessage("Please enter a food item")
             }
         }
+        val cameraFragment = AppCameraFragment()
 
         val cameraButton = view.findViewById<Button>(R.id.button_camera)
         cameraButton.setOnClickListener {
-            findNavController().navigate(R.id.action_homeFragment_to_appCameraFragment)
+            val fm = (activity as MainActivity).supportFragmentManager.beginTransaction()
+            fm.add(R.id.fragmentContainerView_main, cameraFragment)
+            fm.commit()
         }
+
+        val dataObserver = Observer<String> { newData ->
+            val fm = (activity as MainActivity).supportFragmentManager.beginTransaction()
+            fm.remove(cameraFragment)
+            fm.commit()
+            apiViewModel.getDataAndNavigateToResult(newData, findNavController()) {
+                displayToastMessage("Error")
+            }
+        }
+        apiViewModel.cameraScannedData.observe(viewLifecycleOwner, dataObserver)
     }
 
     override fun onDestroyView() {
