@@ -2,12 +2,10 @@ package com.example.foodfacts
 
 import android.os.Bundle
 import android.view.*
-import android.widget.Button
 import androidx.fragment.app.Fragment
 import android.widget.SearchView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.example.foodfacts.databinding.FragmentHomeBinding
 import com.google.android.material.snackbar.Snackbar
