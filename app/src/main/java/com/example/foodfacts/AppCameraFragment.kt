@@ -4,17 +4,11 @@ import android.annotation.SuppressLint
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
-import androidx.navigation.NavController
-import androidx.navigation.findNavController
-import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import kotlinx.coroutines.*
-import org.tensorflow.lite.examples.imageclassification.databinding.FragmentCameraBinding
 import org.tensorflow.lite.examples.imageclassification.fragments.CameraFragment
 import org.tensorflow.lite.task.vision.classifier.Classifications
 
@@ -31,10 +25,11 @@ class AppCameraFragment: CameraFragment() {
         val dataObserver = Observer<String> { newData ->
             val scope = CoroutineScope(Dispatchers.Main)
             scope.launch {
-                println("======== app camera frag: " + newData)
-                println("1." + apiViewModel.genericLiveDataObject.value)
-                apiViewModel.getData(newData) { apiViewModel.navigateToResult(findNavController()) }
-                println("2. " + apiViewModel.genericLiveDataObject.value)
+                if (newData != null) {
+                    apiViewModel.getData(newData,
+                        { apiViewModel.navigateToResult(findNavController()) }, { reInit() })
+                    apiViewModel.cameraScannedData.value = null
+                }
             }
         }
 
@@ -58,5 +53,9 @@ class AppCameraFragment: CameraFragment() {
             }
         }
     }
+
+     private fun reInit() {
+         this.imageClassifierHelper.detected = false
+     }
 
 }

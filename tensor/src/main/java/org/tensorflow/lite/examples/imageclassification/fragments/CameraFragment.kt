@@ -53,7 +53,7 @@ open class CameraFragment : Fragment(), ImageClassifierHelper.ClassifierListener
     private val fragmentCameraBinding
         get() = _fragmentCameraBinding!!
 
-    private lateinit var imageClassifierHelper: ImageClassifierHelper
+    lateinit var imageClassifierHelper: ImageClassifierHelper
     private lateinit var bitmapBuffer: Bitmap
     private val classificationResultsAdapter by lazy {
         ClassificationResultsAdapter().apply {

@@ -40,7 +40,7 @@ class ImageClassifierHelper(
     val imageClassifierListener: ClassifierListener?
 ) {
     private var imageClassifier: ImageClassifier? = null
-    private var detected: Boolean = false
+    var detected: Boolean = false
 
     init {
         setupImageClassifier()
@@ -124,7 +124,6 @@ class ImageClassifierHelper(
             results[0].categories?.let { categories ->
                 if (categories.size > 0) {
                     if (categories[0].label != "") {
-                        println("***** imageClassifier *****")
                         detected = true
                     }
                 }
