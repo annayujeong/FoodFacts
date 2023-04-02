@@ -63,6 +63,7 @@ class ResultFragment : Fragment() {
         binding.textViewFatResultValue.text = returnedData[FoodConstants.TOTAL_FAT]
         binding.textViewCaloriesResultValue.text = returnedData[FoodConstants.CALORIES]
         binding.textViewProteinResultValue.text = returnedData[FoodConstants.PROTEIN]
+        binding.textViewQuantityResultValue.text = returnedData[FoodConstants.QUANTITY]
     }
 
     override fun onDestroyView() {
