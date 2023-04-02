@@ -11,7 +11,6 @@ import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.example.foodfacts.databinding.FragmentHomeBinding
 import com.google.android.material.snackbar.Snackbar
-import org.tensorflow.lite.examples.imageclassification.fragments.CameraFragment
 
 class HomeFragment : Fragment() {
 
@@ -42,10 +41,10 @@ class HomeFragment : Fragment() {
         }
 
         val search = binding.searchViewHomeFragment
-
         search.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String): Boolean {
                 search.clearFocus()
+                println("000000 setOnQueryTextListener")
                 apiViewModel.getDataAndNavigateToResult(search.query.toString(),
                     findNavController()){displayToastMessage("Please enter a food item")}
                 return false
@@ -60,25 +59,22 @@ class HomeFragment : Fragment() {
                 displayToastMessage("Please enter a food item")
             }
         }
-        val cameraFragment = AppCameraFragment()
+//        val cameraFragment = AppCameraFragment()
 
         val cameraButton = view.findViewById<Button>(R.id.button_camera)
         cameraButton.setOnClickListener {
-            val fm = (activity as MainActivity).supportFragmentManager.beginTransaction()
-            fm.add(R.id.fragmentContainerView_main, cameraFragment)
-            fm.commit()
+            findNavController().navigate(R.id.action_homeFragment_to_appCameraFragment)
         }
 
-        val dataObserver = Observer<String> { newData ->
-            val fm = (activity as MainActivity).supportFragmentManager.beginTransaction()
-            fm.remove(cameraFragment)
-            fm.commit()
-            apiViewModel.getDataAndNavigateToResult(newData, findNavController()) {
-                displayToastMessage("Error")
-            }
-        }
-        apiViewModel.cameraScannedData.observe(viewLifecycleOwner, dataObserver)
+//        val dataObserver = Observer<String> { newData ->
+//            println("000000 dataObserver")
+//            apiViewModel.getDataAndNavigateToResult(newData, findNavController()) {
+//                displayToastMessage("Error")
+//            }
+//        }
+//        apiViewModel.cameraScannedData.observe(viewLifecycleOwner, dataObserver)
     }
+
 
     override fun onDestroyView() {
         super.onDestroyView()

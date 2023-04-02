@@ -32,14 +32,15 @@ import org.tensorflow.lite.task.vision.classifier.ImageClassifier
 
 class ImageClassifierHelper(
     var threshold: Float = 0.5f,
-    var numThreads: Int = 2,
-    var maxResults: Int = 3,
+    var numThreads: Int = 1,
+    var maxResults: Int = 1,
     var currentDelegate: Int = 0,
     var currentModel: Int = 0,
     val context: Context,
     val imageClassifierListener: ClassifierListener?
 ) {
     private var imageClassifier: ImageClassifier? = null
+    private var detected: Boolean = false
 
     init {
         setupImageClassifier()
@@ -95,6 +96,7 @@ class ImageClassifierHelper(
     }
 
     fun classify(image: Bitmap, rotation: Int) {
+        if (detected) { return }
         if (imageClassifier == null) {
             setupImageClassifier()
         }
@@ -118,6 +120,17 @@ class ImageClassifierHelper(
             .build()
 
         val results = imageClassifier?.classify(tensorImage, imageProcessingOptions)
+        if (results?.size!! > 0) {
+            results[0].categories?.let { categories ->
+                if (categories.size > 0) {
+                    if (categories[0].label != "") {
+                        println("***** imageClassifier *****")
+                        detected = true
+                    }
+                }
+            }
+        }
+
         inferenceTime = SystemClock.uptimeMillis() - inferenceTime
         imageClassifierListener?.onResults(
             results,

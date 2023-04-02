@@ -21,6 +21,7 @@ import kotlin.collections.HashMap
 class ApiRepository@Inject constructor(@ApplicationContext private var appContext: Context){
 
     suspend fun getFoodApiResult(itemName: String): HashMap<String, String>? {
+        println("ApiRepository getFoodApiResult itemname " + itemName)
         val scope = CoroutineScope(Dispatchers.Main)
         val request = scope.async {
             val client = HttpClient {
@@ -48,6 +49,7 @@ class ApiRepository@Inject constructor(@ApplicationContext private var appContex
             }
             return@async putJsonObjectInHashMap(foodJsonObject)
         }
+        println("1.555555 : ")
         return getResultList.await()
     }
 
@@ -63,6 +65,7 @@ class ApiRepository@Inject constructor(@ApplicationContext private var appContex
         resultMap[FoodConstants.TOTAL_FAT] = formatJsonElementToString(foodJsonObject.get(FoodConstants.TOTAL_FAT))
         resultMap[FoodConstants.PROTEIN] = formatJsonElementToString(foodJsonObject.get(FoodConstants.PROTEIN))
         resultMap[FoodConstants.IMAGE_URL] = formatJsonElementToString(foodJsonObject.get(FoodConstants.IMAGE_URL).asJsonObject.get(FoodConstants.HIGH_RES))
+        println("0000000 resultmap: " + resultMap.toString())
         return resultMap
     }
 

@@ -71,10 +71,11 @@ open class CameraFragment : Fragment(), ImageClassifierHelper.ClassifierListener
     override fun onResume() {
         super.onResume()
 
-        if (!PermissionsFragment.hasPermissions(requireContext())) {
-            Navigation.findNavController(requireActivity(), R.id.fragment_container)
-                .navigate(CameraFragmentDirections.actionCameraToPermissions())
-        }
+        // Below permission check is disabled in our app's scope.
+//        if (!PermissionsFragment.hasPermissions(requireContext())) {
+//            Navigation.findNavController(requireActivity(), R.id.fragment_container)
+//                .navigate(CameraFragmentDirections.actionCameraToPermissions())
+//        }
     }
 
     override fun onDestroyView() {

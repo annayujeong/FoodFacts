@@ -21,22 +21,46 @@ class ApiViewModel @Inject constructor(private val apiRepository: ApiRepository)
     fun getDataAndNavigateToResult(
         itemName: String,
         navController: NavController,
-        callback:() -> Unit)
-    {
+        callback:() -> Unit
+    ) {
         val scope = CoroutineScope(Dispatchers.Main)
         scope.launch {
-            try {
-                println("==== apiviewmodel ******")
-                println(itemName)
-                val temp = scope.async {
-                    genericLiveDataObject.value = apiRepository.getFoodApiResult(itemName)
-                }
-                temp.await()
-                navController.navigate(R.id.resultFragment)
-            } catch (_: Exception) {
+            val result = apiRepository.getFoodApiResult(itemName)
+            if (result != null) {
+                genericLiveDataObject.value = apiRepository.getFoodApiResult(itemName)
+                navController.navigate(R.id.action_homeFragment_to_resultFragment)
+            } else {
                 callback.invoke()
             }
+//            try {
+//                val temp = scope.async {
+//                    genericLiveDataObject.value = apiRepository.getFoodApiResult(itemName)
+//                }
+//                temp.await()
+//                navigateToResult(navController)
+//            } catch (_: Exception) {
+//                callback.invoke()
+//            }
         }
     }
 
+    suspend fun getData(itemName: String, callback: () -> Unit) {
+        val scope = CoroutineScope(Dispatchers.Main)
+        val process = scope.async {
+            println("11111111")
+            apiRepository.getFoodApiResult(itemName)
+        }
+        println("2222222")
+        process.await()?.let {
+            genericLiveDataObject.value = it
+            println("getData true!!!!")
+            println("3333333")
+            callback.invoke()
+        }
+        println("44444")
+    }
+
+    fun navigateToResult(navController: NavController) {
+        navController.navigate(R.id.resultFragment)
+    }
 }
