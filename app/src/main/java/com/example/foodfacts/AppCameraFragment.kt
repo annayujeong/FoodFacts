@@ -8,6 +8,7 @@ import android.view.View
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
+import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.*
 import org.tensorflow.lite.examples.imageclassification.fragments.CameraFragment
 import org.tensorflow.lite.task.vision.classifier.Classifications
@@ -26,13 +27,14 @@ class AppCameraFragment: CameraFragment() {
             val scope = CoroutineScope(Dispatchers.Main)
             scope.launch {
                 if (newData != null) {
-                    apiViewModel.getData(newData,
-                        { apiViewModel.navigateToResult(findNavController()) }, { reInit() })
+                    apiViewModel.getDataAndNavigateToResult(
+                        newData,
+                        findNavController(),
+                    ) { onResultNotFound() }
                     apiViewModel.cameraScannedData.value = null
                 }
             }
         }
-
         Handler(Looper.getMainLooper()).post {
             apiViewModel.cameraScannedData.observe(viewLifecycleOwner, dataObserver)
         }
@@ -47,15 +49,25 @@ class AppCameraFragment: CameraFragment() {
         if (results?.size!! > 0) {
             results[0].categories?.let { categories ->
                 if (categories.size > 0) {
-                    println("why still showing so many values????????")
                     apiViewModel.cameraScannedData.postValue(categories[0].label)
                 }
             }
         }
     }
 
-     private fun reInit() {
-         this.imageClassifierHelper.detected = false
-     }
+    private fun onResultNotFound() {
+        reInit()
+        displayToastMessage("Please scan a food item")
+    }
+
+    private fun reInit() {
+        this.imageClassifierHelper.detected = false
+    }
+
+    private fun displayToastMessage(message : String) {
+        this.view?.let { Snackbar.make(it, message, Snackbar.LENGTH_LONG)
+            .setAction("Dismiss"){}.show()
+        }
+    }
 
 }

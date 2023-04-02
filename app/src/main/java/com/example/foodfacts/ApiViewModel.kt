@@ -4,6 +4,7 @@ package com.example.foodfacts
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.navigation.NavController
+import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -19,20 +20,25 @@ class ApiViewModel @Inject constructor(private val apiRepository: ApiRepository)
     fun getDataAndNavigateToResult(
         itemName: String,
         navController: NavController,
-        callback:() -> Unit
+        fail: () -> Unit
     ) {
         val scope = CoroutineScope(Dispatchers.Main)
         scope.launch {
-            try {
-                val result = scope.async {
-                    genericLiveDataObject.value = apiRepository.getFoodApiResult(itemName)
-                }
-                result.await()
-                navigateToResult(navController)
-            } catch (_: Exception) {
-                callback.invoke()
-            }
+            getData(itemName, { navigateToResult(navController) }, fail)
         }
+
+//        val scope = CoroutineScope(Dispatchers.Main)
+//        scope.launch {
+//            try {
+//                val result = scope.async {
+//                    genericLiveDataObject.value = apiRepository.getFoodApiResult(itemName)
+//                }
+//                result.await()
+//                navigateToResult(navController)
+//            } catch (_: Exception) {
+//                success.invoke()
+//            }
+//        }
     }
 
     suspend fun getData(itemName: String, success: () -> Unit, fail: () -> Unit) {
