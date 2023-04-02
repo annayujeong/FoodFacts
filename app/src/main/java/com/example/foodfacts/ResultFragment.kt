@@ -32,8 +32,10 @@ class ResultFragment : Fragment() {
 
         var returnedData = HashMap<String, String>()
         val dataObserver = Observer<HashMap<String, String>> { newData ->
-            returnedData = newData
-            updateViewsOnNewData(foodViewModel, returnedData)
+            if (newData != null) {
+                returnedData = newData
+                updateViewsOnNewData(foodViewModel, returnedData)
+            }
         }
         apiViewModel.genericLiveDataObject.observe(viewLifecycleOwner, dataObserver)
 
@@ -61,6 +63,7 @@ class ResultFragment : Fragment() {
         binding.textViewFatResultValue.text = returnedData[FoodConstants.TOTAL_FAT]
         binding.textViewCaloriesResultValue.text = returnedData[FoodConstants.CALORIES]
         binding.textViewProteinResultValue.text = returnedData[FoodConstants.PROTEIN]
+        binding.textViewQuantityResultValue.text = returnedData[FoodConstants.QUANTITY]
     }
 
     override fun onDestroyView() {

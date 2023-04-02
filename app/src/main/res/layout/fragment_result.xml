@@ -51,7 +51,7 @@
                     android:id="@+id/textView_calories_result_key"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="30dp"
+                    android:layout_marginTop="15dp"
                     android:text="@string/food_calories_label"
                     android:textAlignment="center"
                     android:textSize="24sp"
@@ -61,7 +61,7 @@
                     android:id="@+id/textView_calories_result_value"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="10dp"
+                    android:layout_marginBottom="5dp"
                     android:textAlignment="center"
                     android:textSize="20sp" />
 
@@ -79,7 +79,7 @@
                     android:id="@+id/textView_protein_result_value"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="10dp"
+                    android:layout_marginBottom="5dp"
                     android:textAlignment="center"
                     android:textSize="20sp" />
 
@@ -97,7 +97,25 @@
                     android:id="@+id/textView_fat_result_value"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="10dp"
+                    android:layout_marginBottom="5dp"
+                    android:textAlignment="center"
+                    android:textSize="20sp" />
+
+                <TextView
+                    android:id="@+id/textView_quantity_result_key"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:text="@string/food_serving_quantity_label"
+                    android:textAlignment="center"
+                    android:textSize="24sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/textView_quantity_result_value"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="5dp"
                     android:textAlignment="center"
                     android:textSize="20sp" />
 
