@@ -10,12 +10,9 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:gravity="center"
         android:orientation="vertical"
         tools:context=".AuthenticationFragment">
-
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="100dp" />
 
         <ImageView
             android:id="@+id/imageView_authFragment_logo"
