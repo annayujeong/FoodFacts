@@ -70,10 +70,6 @@ class ApiRepository@Inject constructor(@ApplicationContext private var appContex
         return jsonElement.toString().replace("\"", "")
     }
 
-    fun pushToast(message: String) {
-        Toast.makeText(appContext, message, Toast.LENGTH_SHORT).show()
-    }
-
     private fun hashItemKey(foodInfo: JsonObject): String {
         val key = foodInfo.get(FoodConstants.NDB_NO).toString().toInt()
         val quantity = foodInfo.get(FoodConstants.QUANTITY).toString().toDouble()

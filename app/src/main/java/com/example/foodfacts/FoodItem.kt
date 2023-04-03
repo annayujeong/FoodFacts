@@ -7,5 +7,4 @@ class FoodItem (var foodName: String,
                 var photoUrl: String,
                 var servingQty: String,
                 var nbdNo: String
-                ) {
-}
+                )

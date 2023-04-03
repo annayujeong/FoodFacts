@@ -45,7 +45,6 @@ class AppCameraFragment: CameraFragment() {
         results: List<Classifications>?,
         inferenceTime: Long
     ) {
-
         if (results?.size!! > 0) {
             results[0].categories?.let { categories ->
                 if (categories.size > 0) {
