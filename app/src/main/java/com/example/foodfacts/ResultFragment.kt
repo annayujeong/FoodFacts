@@ -51,7 +51,7 @@ class ResultFragment : Fragment() {
         binding.buttonSaveResult.isClickable = false
         binding.buttonSaveResult.setBackgroundColor(Color.GRAY)
         binding.buttonSaveResult.setTextColor(Color.WHITE)
-        binding.buttonSaveResult.text = "Saved"
+        binding.buttonSaveResult.text = getString(R.string.saved_button_result)
     }
 
     private fun updateViewsOnNewData(foodViewModel: FoodViewModel, returnedData: HashMap<String, String>) {
