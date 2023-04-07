@@ -1,7 +1,5 @@
 package com.example.foodfacts
 
-import com.google.android.material.snackbar.Snackbar
-
 interface AuthenticationInterface {
 
     fun goToHomeScreen(){

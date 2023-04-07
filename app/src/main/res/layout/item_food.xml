@@ -29,7 +29,7 @@
                 android:id="@+id/textView_foodFactCard"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="TextView"
+                android:text="@string/item_name_label"
                 android:textColor="#EAE4E4"
                 android:textSize="34sp" />
 
@@ -37,7 +37,7 @@
                 android:id="@+id/button_FoodItem_toDescription"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="View Food Details" />
+                android:text="@string/food_details_label" />
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 </LinearLayout>

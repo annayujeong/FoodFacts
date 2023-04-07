@@ -20,9 +20,6 @@ import javax.inject.Singleton
 @Singleton
 class MainRepository @Inject constructor(@ApplicationContext private var appContext: Context) {
 
-    // reading/writing or fetching/posting data to remote
-    // or local source
-
     lateinit var db: FirebaseFirestore
 
     private lateinit var auth: FirebaseAuth
@@ -45,8 +42,6 @@ class MainRepository @Inject constructor(@ApplicationContext private var appCont
                 } else {
                     // sign in failed
                     Log.d("Auth", "User account creation failed", task.exception)
-//                    Toast.makeText(appContext, "Authentication failed!",
-//                        Toast.LENGTH_SHORT).show()
                     if(task.exception is FirebaseAuthInvalidCredentialsException){
                         listener.displayToastMessage("Incorrect email format!")
                     } else if (task.exception is FirebaseAuthWeakPasswordException){
@@ -68,8 +63,6 @@ class MainRepository @Inject constructor(@ApplicationContext private var appCont
                 } else {
                     // sign in failed
                     Log.d("Auth", "User account creation failed", task.exception)
-//                    Toast.makeText(appContext, "Authentication failed!",
-//                        Toast.LENGTH_SHORT).show()
                     if(task.exception is FirebaseAuthInvalidCredentialsException){
                         listener.displayToastMessage("Incorrect email format!")
                     } else if (task.exception is FirebaseAuthInvalidUserException){
@@ -101,9 +94,5 @@ class MainRepository @Inject constructor(@ApplicationContext private var appCont
                 }
             }
         }
-    }
-
-    fun getUser(): FirebaseUser? {
-        return currentUser
     }
 }

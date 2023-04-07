@@ -127,7 +127,7 @@
             android:layout_width="match_parent"
             android:layout_height="48dp"
             android:layout_marginTop="10dp"
-            android:text="Save" />
+            android:text="@string/save_button_label" />
 
     </LinearLayout>
 </layout>

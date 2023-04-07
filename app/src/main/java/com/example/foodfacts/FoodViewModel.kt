@@ -11,8 +11,6 @@ import com.google.firebase.ktx.Firebase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
-// ViewModel responsible for handling calls/other stuff to the Firebase database
-// handling user information and account?
 
 @HiltViewModel
 class FoodViewModel @Inject constructor(private val mainRepository: MainRepository, private val foodRepository: FoodRepository): ViewModel() {

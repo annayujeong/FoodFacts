@@ -21,4 +21,8 @@
     <string name="favourites_button_label">Favourites</string>
     <string name="search_food_hint">Search for a food...</string>
     <string name="saved_button_result">Saved</string>
+    <string name="camera_button_label">Camera</string>
+    <string name="save_button_label">Save</string>
+    <string name="item_name_label">Item name</string>
+    <string name="food_details_label">View Food Details</string>
 </resources>

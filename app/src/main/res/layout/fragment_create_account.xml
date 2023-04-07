@@ -21,22 +21,23 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:text="@string/create_account_label"
-            android:textSize="48dp" />
+            android:textSize="48sp" />
 
         <EditText
             android:id="@+id/editText_createAccountFragment_email"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="48dp"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
             android:ems="10"
             android:hint="@string/create_account_email_label"
-            android:inputType="textEmailAddress" />
+            android:inputType="textEmailAddress"
+            android:textColor="@color/black" />
 
         <EditText
             android:id="@+id/editText_createAccountFragment_password"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="48dp"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
             android:ems="10"
