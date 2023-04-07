@@ -35,8 +35,6 @@ class FoodItemAdapter(private val mList: List<FoodItem>, private val listener: N
         // Get element from your dataset at this position and replace the
         // contents of the view with that element
 
-        //holder.textView.text = mList[position]
-
         holder.foodCardItemName.text = mList[position].foodName
 
         Glide.with(holder.foodImage.context)
