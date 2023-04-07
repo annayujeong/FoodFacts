@@ -17,11 +17,6 @@ import javax.inject.Inject
 @HiltViewModel
 class FoodViewModel @Inject constructor(private val mainRepository: MainRepository, private val foodRepository: FoodRepository): ViewModel() {
 
-//    fun initialize() {
-//        db = Firebase.firestore
-//        auth = Firebase.auth
-//    }
-
     fun getFavouriteItems(callback: (foodList: List<FoodItem>) -> Unit){
         foodRepository.getFoodList(callback)
     }
