@@ -56,25 +56,19 @@ class FoodItemDescriptionFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         val foodViewModel: FoodViewModel by activityViewModels()
 
-        val currQuest =  arguments?.get("key")
+        val currFood =  arguments?.get("key")
 
-        //val foodName = view.findViewById<TextView>(R.id.textView_FoodItemDescription_name)
+        
         val foodName = binding.textViewFoodItemDescriptionName
-        //val foodProtein = view.findViewById<TextView>(R.id.textView_FoodItemDescription_protein)
         val foodProtein = binding.textViewFoodItemDescriptionProtein
-        //val foodFat = view.findViewById<TextView>(R.id.textView_FoodItemDescription_total_fat)
         val foodFat = binding.textViewFoodItemDescriptionTotalFat
-        //val foodImage = view.findViewById<ImageView>(R.id.imageView_FoodItemDescription)
         val foodImage = binding.imageViewFoodItemDescription
-        //val foodCalories = view.findViewById<TextView>(R.id.textView_FoodItemDescription_calories)
         val foodCalories = binding.textViewFoodItemDescriptionCalories
-        //val foodServingQty = view.findViewById<TextView>(R.id.textView_FoodItemDescription_serving_qty)
         val foodServingQty = binding.textViewFoodItemDescriptionServingQty
 
-        //val deleteButton = view.findViewById<Button>(R.id.button_FoodItemDescription_deleteFood)
         val deleteButton = binding.buttonFoodItemDescriptionDeleteFood
 
-        val individualFoodItem = foodViewModel.getFoodListAlrInit().filter {x -> x.nbdNo == currQuest}
+        val individualFoodItem = foodViewModel.getFoodListAlrInit().filter {x -> x.nbdNo == currFood}
 
         for (food in individualFoodItem) {
             foodName.text = food.foodName
@@ -89,7 +83,7 @@ class FoodItemDescriptionFragment : Fragment() {
         }
 
         deleteButton.setOnClickListener {
-            foodViewModel.deleteFoodItem(currQuest as String)
+            foodViewModel.deleteFoodItem(currFood as String)
 
             this.view?.let { it1 ->
                 Snackbar.make(it1, "Item deleted", Snackbar.LENGTH_LONG)
